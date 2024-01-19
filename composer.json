@@ -1,0 +1,15 @@
+{
+    "name": "admin/prueba-codigo-actas",
+    "description": "acta entrega computadores",
+    "authors": [
+        {
+            "name": "samuel, tomas, sthepe"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29",
+        "phpoffice/phpword": "^1.2",
+        "phpdocumentor/phpdocumentor": "^2.9",
+        "phpdocx/phpdocx": "^9.0"
+    }
+}
