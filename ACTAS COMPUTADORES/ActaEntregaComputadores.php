@@ -78,17 +78,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
     $nombreUsuario = $_POST['nombre'];
-$cedulaUsuario = $_POST['cedula'];
-$tipoEquipo = $_POST['tipoEquipo'];
-$estadoEquipo = $_POST['usoEquipo'];
-$nombreEquipo = $_POST['nombreEquipo'];
-$nombreProcesador = $_POST['procesadorEquipo'];
-$almacenamientoEquipo = $_POST['almacenamientoEquipo'];
-$RAMEquipo = $_POST['memoriaRAM'];
-$marcaEquipo = $_POST['marcaEquipo'];
-$modeloEquipo = $_POST['modeloEquipo'];
-$serialEquipo = $_POST['serialEquipo'];
-$versionSO = $_POST['versionSO'];
+    $cedulaUsuario = $_POST['cedula'];
+    $tipoEquipo = $_POST['tipoEquipo'];
+    $estadoEquipo = $_POST['usoEquipo'];
+    $nombreEquipo = $_POST['nombreEquipo'];
+    $nombreProcesador = $_POST['procesadorEquipo'];
+    $almacenamientoEquipo = $_POST['almacenamientoEquipo'];
+    $RAMEquipo = $_POST['memoriaRAM'];
+    $marcaEquipo = $_POST['marcaEquipo'];
+    $modeloEquipo = $_POST['modeloEquipo'];
+    $serialEquipo = $_POST['serialEquipo'];
+    $versionSO = $_POST['versionSO'];
     $periferico = $_POST['periferico'];
 
     if($tipoEquipo === "escritorio"){
