@@ -56,9 +56,19 @@
 <?php
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;   
+use PhpOffice\PhpWord\Writer\Word2007;
+use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Font;
+use PhpOffice\PhpWord\Shared\Converter;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpWord\Element\TextRun;
+use Mikehaertl\ShellCommand\Command;
+use Mpdf\Mpdf;
+use PhpOffice\PhpWord\Writer\HTML;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     echo "SE HA ENVIADO EL FORMULARIO";
@@ -125,7 +135,147 @@ $PIN = $_POST['PIN'];
     $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
     $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
 
-    $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-    $writer->save('C:/Users/Admin/Downloads/CELULARES ELIS 2023.xlsx');
+
+    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+    $section = $phpWord->addSection();
+    
+    $imagePath = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/logoElis.png';
+    $section->addImage(
+        $imagePath,
+        array(
+            'width' => Converter::cmToPixel(3),
+            'height' => Converter::cmToPixel(2),      
+            'marginTop' => Converter::cmToPixel(1), 
+        )
+    );
+    
+    
+    $titleFontStyle = array('name' => 'Calibri', 'size' => 16, 'color' => '000000');
+    
+
+    $paragraphStyle = array('alignment' => Jc::CENTER);
+    $justificar = array('algnment' => Jc::BOTH);
+
+    $section->addText("ACTA DE RECIBIDO EQUIPO PORTATIL", $titleFontStyle, $paragraphStyle);
+    
+    $normalFontStyle = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH);
+    $normalFontStyleConNegrita = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH , 'bold' => true);
+    
+    // Texto de la primera parte del acta
+
+
+    $meses = [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+    ];
+    
+    $fecha = "En la ciudad de Bogotá, a los " . date('d') . " días del mes de " . $meses[date('m') - 1] . " del año 20" . date('y') . ", se hace entrega de un equipo portatil, al señor Julian Andres Ariza , Soporte Tecnico en sistemas IT Elis Colombia por parte de ";
+    $textRun = $section->addTextRun($normalFontStyle);
+    $textRun->addText($fecha , $normalFontStyle);
+    
+    $textRun->addText($nombreUsuario, $normalFontStyleConNegrita);
+    
+    $identificacion = " identificado con cédula de ciudadanía número ";
+    $textRun->addText($identificacion, $normalFontStyle + array('spaceAfter' => 0));
+    
+    $textRun->addText($cedulaUsuario, $normalFontStyleConNegrita);
+    
+    $especificacion = " con las siguientes especificaciones:";
+    $section->addText($especificacion, $normalFontStyle);
+    
+    
+    // Lista de especificaciones
+    $specifications = [
+        "MARCA" => $marcaEquipo,
+        "MODELO" => $modeloEquipo,
+        "SERIAL" => $serialEquipo,
+        "PROCESADOR" => $nombreProcesador,
+        "DISCO DURO" => $almacenamientoEquipo,
+        "MEMORIA RAM" => $RAMEquipo,
+        "NOMBRE DEL EQUIPO" => $nombreEquipo,
+        "ENTREGA" => $entrega
+    ];
+    
+    
+    foreach ($specifications as $label => $value) {
+        $section->addText("    • $label: $value " , $normalFontStyleConNegrita);
+    }
+    
+    
+    $section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado de funcionamiento.  " , $normalFontStyle , $justificar);
+    $section->addText("\nDe acuerdo con lo anterior se hace constar que en el equipo se encuentra en las condiciones adecuadas para recibirlo sin ningunas salvedades." , $normalFontStyle , $justificar);
+    
+    
+    $section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran en buen estado y en las condiciones adecuadas para recibirlo sin ninguna salvedad." , $normalFontStyle , $justificar);
+    
+    
+    $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
+    
+    $imagePathJul = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/jul.png';
+    $section->addImage(
+        $imagePathJul,
+        array(
+            'width' => Converter::cmToPixel(3),
+            'height' => Converter::cmToPixel(1.5),      
+            'marginTop' => Converter::cmToPixel(1), 
+        )
+    );
+    
+    $section->addText("\nJulian Andres Ariza Pardo                                                             ".$nombreUsuario."" , $normalFontStyleConNegrita);
+    $section ->addText("\nSoporte Tecnico de sistemas IT" , $normalFontStyleConNegrita);
+    
+    $imagePathInfo = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/infoElis.png';
+    $section->addImage(
+        $imagePathInfo,
+        array(
+            'width' => Converter::cmToPixel(12),
+            'height' => Converter::cmToPixel(1.5),      
+            'marginTop' => Converter::cmToPixel(1), 
+        )
+    );
+    
+    $archivoWord = 'Acta_Entrega_Computador_Portatil_' . $nombreUsuario . '.docx';
+    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+    $objWriter->save($archivoWord);
+    
+    // Redireccionar a la descarga del documento Word
+    header("Location: $archivoWord");
+    
+    echo "SE DESCARGO SU WORD";
+    
+    $archivoWord = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.docx';
+    
+    // Ruta del archivo PDF de salida
+    $archivoPdf = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.pdf';
+    
+    // Cargar el documento Word
+    $phpWord = IOFactory::load($archivoWord);
+    
+    // Guardar el documento Word en HTML temporal
+    $archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
+    $objWriter = IOFactory::createWriter($phpWord, 'HTML');
+    $objWriter->save($archivoHtml);
+    
+    // Convertir el archivo HTML a PDF
+    $command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
+    $command->execute();
+    
+    // Redireccionar o hacer algo con el PDF generado
+    header("Location: $archivoPdf");
+    
+    echo "SE DESCARGO SU PDF";
+    
+    exit();
 }
 ?>
