@@ -6,6 +6,11 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
+    'mikehaertl\\wkhtmlto\\' => array($vendorDir . '/mikehaertl/phpwkhtmltopdf/src'),
+    'mikehaertl\\tmp\\' => array($vendorDir . '/mikehaertl/php-tmpfile/src'),
+    'mikehaertl\\shellcommand\\' => array($vendorDir . '/mikehaertl/php-shellcommand/src'),
+    'mikehaertl\\pdftk\\' => array($vendorDir . '/mikehaertl/php-pdftk/src'),
     'ZipStream\\' => array($vendorDir . '/maennchen/zipstream-php/src'),
     'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib/src'),
     'Zend\\ServiceManager\\' => array($vendorDir . '/zendframework/zend-servicemanager/src'),
@@ -43,6 +48,9 @@ return array(
     'PhpOffice\\PhpWord\\' => array($vendorDir . '/phpoffice/phpword/src/PhpWord'),
     'PhpOffice\\PhpSpreadsheet\\' => array($vendorDir . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet'),
     'PhpOffice\\Math\\' => array($vendorDir . '/phpoffice/math/src/Math'),
+    'Mpdf\\PsrLogAwareTrait\\' => array($vendorDir . '/mpdf/psr-log-aware-trait/src'),
+    'Mpdf\\PsrHttpMessageShim\\' => array($vendorDir . '/mpdf/psr-http-message-shim/src'),
+    'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Matrix\\' => array($vendorDir . '/markbaker/matrix/classes/src'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
@@ -52,5 +60,6 @@ return array(
     'Doctrine\\Deprecations\\' => array($vendorDir . '/doctrine/deprecations/lib/Doctrine/Deprecations'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/src'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
 );

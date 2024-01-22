@@ -11,4 +11,6 @@ return array(
     'fe1bcd0336136e435eaf197895daf81a' => $vendorDir . '/nikic/php-parser/lib/bootstrap.php',
     'd9d39f82a605ebe5918f683dd402334c' => $vendorDir . '/padraic/humbug_get_contents/src/function.php',
     '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    'db356362850385d08a5381de2638b5fd' => $vendorDir . '/mpdf/mpdf/src/functions.php',
 );

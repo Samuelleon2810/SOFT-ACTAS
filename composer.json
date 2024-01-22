@@ -10,6 +10,9 @@
         "phpoffice/phpspreadsheet": "^1.29",
         "phpoffice/phpword": "^1.2",
         "phpdocumentor/phpdocumentor": "^2.9",
-        "phpdocx/phpdocx": "^9.0"
+        "mikehaertl/phpwkhtmltopdf": "^2.5",
+        "mikehaertl/php-shellcommand": "^1.7",
+        "mpdf/mpdf": "^8.2",
+        "mikehaertl/php-pdftk": "^0.13.1"
     }
 }

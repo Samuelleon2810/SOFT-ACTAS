@@ -12,9 +12,22 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         'fe1bcd0336136e435eaf197895daf81a' => __DIR__ . '/..' . '/nikic/php-parser/lib/bootstrap.php',
         'd9d39f82a605ebe5918f683dd402334c' => __DIR__ . '/..' . '/padraic/humbug_get_contents/src/function.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'db356362850385d08a5381de2638b5fd' => __DIR__ . '/..' . '/mpdf/mpdf/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
+        'm' => 
+        array (
+            'mikehaertl\\wkhtmlto\\' => 20,
+            'mikehaertl\\tmp\\' => 15,
+            'mikehaertl\\shellcommand\\' => 24,
+            'mikehaertl\\pdftk\\' => 17,
+        ),
         'Z' => 
         array (
             'ZipStream\\' => 10,
@@ -69,6 +82,9 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         ),
         'M' => 
         array (
+            'Mpdf\\PsrLogAwareTrait\\' => 22,
+            'Mpdf\\PsrHttpMessageShim\\' => 24,
+            'Mpdf\\' => 5,
             'Monolog\\' => 8,
             'Matrix\\' => 7,
         ),
@@ -87,6 +103,7 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
             'Doctrine\\Deprecations\\' => 22,
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
+            'DeepCopy\\' => 9,
         ),
         'C' => 
         array (
@@ -95,6 +112,26 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
+        'mikehaertl\\wkhtmlto\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/phpwkhtmltopdf/src',
+        ),
+        'mikehaertl\\tmp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-tmpfile/src',
+        ),
+        'mikehaertl\\shellcommand\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-shellcommand/src',
+        ),
+        'mikehaertl\\pdftk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mikehaertl/php-pdftk/src',
+        ),
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
@@ -244,6 +281,18 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             0 => __DIR__ . '/..' . '/phpoffice/math/src/Math',
         ),
+        'Mpdf\\PsrLogAwareTrait\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-log-aware-trait/src',
+        ),
+        'Mpdf\\PsrHttpMessageShim\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/psr-http-message-shim/src',
+        ),
+        'Mpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -280,6 +329,10 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
+        'DeepCopy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
@@ -291,16 +344,16 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             'phpDocumentor' => 
             array (
-                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-                1 => __DIR__ . '/..' . '/phpdocumentor/reflection/src',
-                2 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/unit',
-                3 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/mocks',
-                4 => __DIR__ . '/..' . '/phpdocumentor/graphviz/src',
-                5 => __DIR__ . '/..' . '/phpdocumentor/graphviz/tests/unit',
-                6 => __DIR__ . '/..' . '/phpdocumentor/fileset/src',
-                7 => __DIR__ . '/..' . '/phpdocumentor/fileset/tests/unit',
-                8 => __DIR__ . '/..' . '/phpdocumentor/phpdocumentor/src',
-                9 => __DIR__ . '/..' . '/phpdocumentor/phpdocumentor/tests/unit',
+                0 => __DIR__ . '/..' . '/phpdocumentor/fileset/src',
+                1 => __DIR__ . '/..' . '/phpdocumentor/fileset/tests/unit',
+                2 => __DIR__ . '/..' . '/phpdocumentor/graphviz/src',
+                3 => __DIR__ . '/..' . '/phpdocumentor/graphviz/tests/unit',
+                4 => __DIR__ . '/..' . '/phpdocumentor/phpdocumentor/src',
+                5 => __DIR__ . '/..' . '/phpdocumentor/phpdocumentor/tests/unit',
+                6 => __DIR__ . '/..' . '/phpdocumentor/reflection/src',
+                7 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/unit',
+                8 => __DIR__ . '/..' . '/phpdocumentor/reflection/tests/mocks',
+                9 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             ),
         ),
         'T' => 

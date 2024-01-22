@@ -62,7 +62,9 @@ use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpWord\Element\TextRun;
-
+use Mikehaertl\ShellCommand\Command;
+use Mpdf\Mpdf;
+use PhpOffice\PhpWord\Writer\HTML;
 //extensiones para word
 
 
@@ -136,6 +138,8 @@ $periferico = $_POST['periferico'];
 
 
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
+//$command = new Mikehaertl\ShellCommand\Command();
+
 
 
 // Agregar una sección al documento
@@ -180,15 +184,21 @@ $meses = [
     'Noviembre',
     'Diciembre'
 ];
-$fecha = "En la ciudad de Bogotá, a los ".date('d')." dias del mes ".$meses[date('m')-1]." del año 20".date('y').", se hace entrega de un equipo de escritorio, a ";
-$nombreUs = $section->TextRun($nombreUsuario, $normalFontStyleConNegrita);
-$identificacion = "identificado con cédula de ciudadanía número ";
-$celuda = $section->TextRun($cedulaUsuario, $normalFontStyleConNegrita);
+
+$fecha = "En la ciudad de Bogotá, a los " . date('d') . " días del mes de " . $meses[date('m') - 1] . " del año 20" . date('y') . ", se hace entrega de un equipo de escritorio, a ";
+$textRun = $section->addTextRun($normalFontStyle);
+$textRun->addText($fecha , $normalFontStyle);
+
+$textRun->addText($nombreUsuario, $normalFontStyleConNegrita);
+
+$identificacion = " identificado con cédula de ciudadanía número ";
+$textRun->addText($identificacion, $normalFontStyle + array('spaceAfter' => 0));
+
+$textRun->addText($cedulaUsuario, $normalFontStyleConNegrita);
+
 $especificacion = " con las siguientes especificaciones:";
+$section->addText($especificacion, $normalFontStyle);
 
-$encabezado = $fecha . $nombreUs .$identificacion . $celuda . $especificacion;
-
-$section->addText($encabezado);
 
 // Lista de especificaciones
 $specifications = [
@@ -228,8 +238,8 @@ $section->addImage(
     )
 );
 
-$section->addText("\nJulian Andres Ariza Pardo                                                                    ".$nombreUsuario."
-                   \nSoporte Tecnico de sistemas IT                           " , $normalFontStyleConNegrita);
+$section->addText("\nJulian Andres Ariza Pardo                                                             ".$nombreUsuario."" , $normalFontStyleConNegrita);
+$section ->addText("\nSoporte Tecnico de sistemas IT" , $normalFontStyleConNegrita);
 
 $imagePathInfo = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/infoElis.png';
 $section->addImage(
@@ -241,13 +251,39 @@ $section->addImage(
     )
 );
 
-// Guardar el documento Word
 $archivoWord = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.docx';
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 $objWriter->save($archivoWord);
 
 // Redireccionar a la descarga del documento Word
 header("Location: $archivoWord");
+
+sleep(3);
+
+echo "SE DESCARGO SU WORD";
+
+$archivoWord = 'C:Users/Admin/Downloads/Acta_Entrega_Computadores_' . $nombreUsuario . '.docx';
+
+// Ruta del archivo PDF de salida
+$archivoPdf = 'C:Users/Admin/Downloads/Acta_Entrega_Computadores_' . $nombreUsuario . '.pdf';
+
+// Cargar el documento Word
+$phpWord = IOFactory::load($archivoWord);
+
+// Guardar el documento Word en HTML temporal
+$archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
+$objWriter = IOFactory::createWriter($phpWord, 'HTML');
+$objWriter->save($archivoHtml);
+
+// Convertir el archivo HTML a PDF
+$command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
+$command->execute();
+
+// Redireccionar o hacer algo con el PDF generado
+header("Location: $archivoPdf");
+
+echo "SE DESCARGO SU PDF";
+
 exit();
 }
 ?>
