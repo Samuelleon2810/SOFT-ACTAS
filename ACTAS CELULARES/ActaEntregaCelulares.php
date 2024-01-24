@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
-    <title>Document</title>
+    <title>Acta Entrega Celulares</title>
 </head>
 <body>
-<form action="ActaEntregaCeculares.php" method="post">
-
+<form action="ActaEntregaCelulares.php" method="post">
+<h1>ACTA DE ENTREGA EQUIPO CELULAR</h1>
 <!-- datos persona -->
 <label for="nombre">Ingrese el nombre del responsable</label>    
 <input type="text" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+" title="Ingrese solo letras y espacios" required>
 <label for="cedula">Ingrese el documento de a quien se entrega:</label>
 <input type="text" name="cedula" pattern="\d+" title="Ingrese solo números" required>
+<label for="color">Ingrese el color del telefono:</label>    
+<input type="text" name="color" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+" title="Ingrese solo letras y espacios" required>
 <label for="Corporativo">Ingrese el número corporativo del celular</label>
 <input type="number" placeholder="3015899630" name="Corporativo" required>
 <label for="Asignado">Ingrese el nombre de la persona asignado</label>    
@@ -31,7 +33,7 @@
 <label for="serialEquipo">Ingrese el serial del equipo:</label>
 <input type="text" placeholder="JN1TVV1" name="serialEquipo" required>
 <label for="marcaEquipo">Ingrese la marca del equipo:</label>
-<input type="text" placeholder=",motorola" name="marcaEquipo" required>
+<input type="text" placeholder="motorola" name="marcaEquipo" required>
 <label for="modeloEquipo">Ingresar el modelo del equipo:<label>
 <input type="text" placeholder="g23" name="modeloEquipo" required>
 <label for="Imei1">Ingresar el  primer IMEI del equipo:</label>
@@ -90,6 +92,7 @@ $numero = $_POST['Numero'];
 $SIM = $_POST['SIM'];
 $EMAIL = $_POST['EMAIL'];
 $PIN = $_POST['PIN'];
+$colorEquipo = $_POST['color'];
 
 
     $spreadsheet = new Spreadsheet();
@@ -157,7 +160,7 @@ $PIN = $_POST['PIN'];
     $paragraphStyle = array('alignment' => Jc::CENTER);
     $justificar = array('algnment' => Jc::BOTH);
 
-    $section->addText("ACTA DE RECIBIDO EQUIPO PORTATIL", $titleFontStyle, $paragraphStyle);
+    $section->addText("ACTA DE ENTREGA EQUIPO CELULAR", $titleFontStyle, $paragraphStyle);
     
     $normalFontStyle = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH);
     $normalFontStyleConNegrita = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH , 'bold' => true);
@@ -180,7 +183,7 @@ $PIN = $_POST['PIN'];
         'Diciembre'
     ];
     
-    $fecha = "En la ciudad de Bogotá, a los " . date('d') . " días del mes de " . $meses[date('m') - 1] . " del año 20" . date('y') . ", se hace entrega de un equipo portatil, al señor Julian Andres Ariza , Soporte Tecnico en sistemas IT Elis Colombia por parte de ";
+    $fecha = "En la ciudad de Bogotá, a los " . date('d') . " días del mes de " . $meses[date('m') - 1] . " del año 20" . date('y') . ", se hace entrega de un equipo celular, a ";
     $textRun = $section->addTextRun($normalFontStyle);
     $textRun->addText($fecha , $normalFontStyle);
     
@@ -199,12 +202,11 @@ $PIN = $_POST['PIN'];
     $specifications = [
         "MARCA" => $marcaEquipo,
         "MODELO" => $modeloEquipo,
-        "SERIAL" => $serialEquipo,
-        "PROCESADOR" => $nombreProcesador,
-        "DISCO DURO" => $almacenamientoEquipo,
-        "MEMORIA RAM" => $RAMEquipo,
-        "NOMBRE DEL EQUIPO" => $nombreEquipo,
-        "ENTREGA" => $entrega
+        "COLOR" => $colorEquipo,
+        "NUMERO DE SERIE" => $serialEquipo,
+        "IMEI 1" => $imei1,
+        "IMEI 2" => $imei2,
+        "SIMCARD" => $SIM
     ];
     
     
@@ -213,11 +215,11 @@ $PIN = $_POST['PIN'];
     }
     
     
-    $section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado de funcionamiento.  " , $normalFontStyle , $justificar);
-    $section->addText("\nDe acuerdo con lo anterior se hace constar que en el equipo se encuentra en las condiciones adecuadas para recibirlo sin ningunas salvedades." , $normalFontStyle , $justificar);
+    $section->addText("\nDe acuerdo con lo anterior se hace constar que en el equipo se encuentra usado en las condiciones adecuadas para recibirlo con las siguientes salvedades:N/A  " , $normalFontStyle , $justificar);
+    $section->addText("\nSe hace responsable la persona quien recibe el equipo celular por daños, pérdida o robo. Se manifiesta que este equipo no cuenta con ningún seguro por perdida y robo. " , $normalFontStyle , $justificar);
     
     
-    $section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran en buen estado y en las condiciones adecuadas para recibirlo sin ninguna salvedad." , $normalFontStyle , $justificar);
+    $section->addText("\nEn caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento.   " , $normalFontStyle , $justificar);
     
     
     $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
@@ -245,7 +247,7 @@ $PIN = $_POST['PIN'];
         )
     );
     
-    $archivoWord = 'Acta_Entrega_Computador_Portatil_' . $nombreUsuario . '.docx';
+    $archivoWord = 'Acta_Entrega_Celular_' . $nombreUsuario . '.docx';
     $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
     $objWriter->save($archivoWord);
     
@@ -254,16 +256,16 @@ $PIN = $_POST['PIN'];
     
     echo "SE DESCARGO SU WORD";
     
-    $archivoWord = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.docx';
+    $archivoWord = 'C:Users/Admin/Downloads/Acta_Entrega_Celular_' . $nombreUsuario . '.docx';
     
     // Ruta del archivo PDF de salida
-    $archivoPdf = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.pdf';
+    $archivoPdf = 'C:Users/Admin/Downloads/Acta_Entrega_Celular_' . $nombreUsuario . '.pdf';
     
     // Cargar el documento Word
     $phpWord = IOFactory::load($archivoWord);
     
     // Guardar el documento Word en HTML temporal
-    $archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
+    $archivoHtml = 'Acta_Entrega_Celular_' . $nombreUsuario . '.html';
     $objWriter = IOFactory::createWriter($phpWord, 'HTML');
     $objWriter->save($archivoHtml);
     

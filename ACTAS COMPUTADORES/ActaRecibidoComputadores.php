@@ -7,6 +7,7 @@
 </head>
 <body>
     <form action="ActaRecibidoComputadores.php" method="post">
+    <h1>ACTA DE RECIBIDO EQUIPO COMPUTADOR</h1>
     <label for="nombre">Ingrese el nombre de quien entrega el equipo </label>    
 <input type="text" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+" title="Ingrese solo letras y espacios" required>
 <label for="cedula">Ingrese el documento de quien lo entrega:</label>

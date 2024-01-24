@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="ActaEntregaComputadores.php" method="post">
-
+<h1>ACTA DE ENTREGA EQUIPO COMPUTADOR </h1>
 <!-- datos persona -->
 <label for="nombre">Ingrese el nombre del destinatario</label>    
 <input type="text" name="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+" title="Ingrese solo letras y espacios" required>
