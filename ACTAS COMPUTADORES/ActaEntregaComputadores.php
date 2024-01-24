@@ -70,13 +70,16 @@ use PhpOffice\PhpWord\Writer\HTML;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-
-//echo "<label for='Perifericos'>Ingrese las especificaciones de los perifericos:</label>\n";
-//echo "<input type='text' placeholder='Raton,Teclado....' name='periferico' required>\n";
-//echo "<input type='submit' value='Descargar y Llenar' name='enviarInfo'>\n";
+    $tipoEquipo = $_POST['tipoEquipo'];
 
 
+    if($tipoEquipo === "escritorio"){
 
+        echo "<label for='Perifericos'>Ingrese las especificaciones de los perifericos:</label>\n";
+echo "<input type='text' placeholder='Raton,Teclado....' name='periferico' required>\n";
+echo "<input type='submit' value='Descargar y Llenar' name='enviarInfo'>\n";
+
+if($_POST['enviarInfo']){
     $nombreUsuario = $_POST['nombre'];
     $cedulaUsuario = $_POST['cedula'];
     $tipoEquipo = $_POST['tipoEquipo'];
@@ -89,9 +92,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
-    $periferico = $_POST['periferico'];
-
-    if($tipoEquipo === "escritorio"){
+    $periferico = $_POST['periferico']; }
 
     //escritura en excel
 
@@ -283,7 +284,18 @@ exit();
 
 }else{
 
-
+    $nombreUsuario = $_POST['nombre'];
+    $cedulaUsuario = $_POST['cedula'];
+    $tipoEquipo = $_POST['tipoEquipo'];
+    $estadoEquipo = $_POST['usoEquipo'];
+    $nombreEquipo = $_POST['nombreEquipo'];
+    $nombreProcesador = $_POST['procesadorEquipo'];
+    $almacenamientoEquipo = $_POST['almacenamientoEquipo'];
+    $RAMEquipo = $_POST['memoriaRAM'];
+    $marcaEquipo = $_POST['marcaEquipo'];
+    $modeloEquipo = $_POST['modeloEquipo'];
+    $serialEquipo = $_POST['serialEquipo'];
+    $versionSO = $_POST['versionSO'];
     //escritura en excel
 
     $spreadsheet = new Spreadsheet();
