@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="/index.css">
     <title>Acta Entrega Computadores</title>
-</head>
+</head> 
 <body>
 <form action="ActaEntregaComputadores.php" method="post">
 <h1>ACTA DE ENTREGA EQUIPO COMPUTADOR </h1>
@@ -75,11 +75,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($tipoEquipo === "escritorio"){
 
-        echo "<label for='Perifericos'>Ingrese las especificaciones de los perifericos:</label>\n";
-echo "<input type='text' placeholder='Raton,Teclado....' name='periferico' required>\n";
-echo "<input type='submit' value='Descargar y Llenar' name='enviarInfo'>\n";
+  //      echo "<label for='Perifericos'>Ingrese las especificaciones de los perifericos:</label>\n";
+//echo "<input type='text' placeholder='Raton,Teclado....' name='periferico' required>\n";
+//echo "<input type='submit' value='Descargar y Llenar' name='enviarInfo'>\n";
 
-if($_POST['enviarInfo']){
+//if($_POST['enviarInfo']){
     $nombreUsuario = $_POST['nombre'];
     $cedulaUsuario = $_POST['cedula'];
     $tipoEquipo = $_POST['tipoEquipo'];
@@ -92,18 +92,16 @@ if($_POST['enviarInfo']){
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
-    $periferico = $_POST['periferico']; }
+   // $periferico = $_POST['periferico']; 
+//}else{
+  //      echo "por favor llene los campos para generar su documento";
+   // }
 
     //escritura en excel
 
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-
-    $elemento = $hojaCalculo->getActiveSheet();
-
     $columnaNombrePersona ="O" ;
     $columnaCedulaPersona ="Z" ;
-    $columnaTipoDeEquipo ="AA" ;
+    $columnaTipoDeEquipo ="Q" ;
     $columnaTipoDeEstado ="AB" ;
     $columnaNombreEquipo = "A" ;
     $columnaNombreProcesadorEquipo = "B" ;
@@ -113,11 +111,37 @@ if($_POST['enviarInfo']){
     $columnaModeloEquipo = "F";
     $columnaSerialEquipo = "G";
     $columnaVersionSO = "H";
+    $columnaAsignado = "AC";
 
-    $fila = 1;
-        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-    $fila++;
+    $spreadsheet = new Spreadsheet();
+    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+
+    $elemento = $hojaCalculo->getActiveSheet();
+
+    $hojita = $hojaCalculo->getSheet(1);
+
+    $cellIterator = $elemento->getRowIterator();
+
+    foreach ($hojita->getRowIterator() as $row) {
+        foreach ($row->getCellIterator() as $cell) {
+            $cellValue = $cell->getValue();
+        
+            if ($cellValue == $serialEquipo) {
+                $foundCell = $cell->getCoordinate();
+                list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+                break 2;  // Salir de ambos bucles
+            }
+
+        }
     }
+
+    if (!isset($foundCell)) {
+        $fila = 1;
+        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+        $fila++;
+    }
+    }
+    
 
     $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
     $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
@@ -131,6 +155,7 @@ if($_POST['enviarInfo']){
     $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
     $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
     $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
+    $elemento->setCellValue($columnaAsignado . $fila, "EN USO");
 
     $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
     $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
@@ -282,7 +307,9 @@ exit();
 
 
 
-}else{
+}elseif($tipoEquipo=== 'portatil'){
+
+
 
     $nombreUsuario = $_POST['nombre'];
     $cedulaUsuario = $_POST['cedula'];
@@ -298,11 +325,6 @@ exit();
     $versionSO = $_POST['versionSO'];
     //escritura en excel
 
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-
-    $elemento = $hojaCalculo->getActiveSheet();
-
     $columnaNombrePersona ="O" ;
     $columnaCedulaPersona ="Z" ;
     $columnaTipoDeEquipo ="AA" ;
@@ -315,11 +337,38 @@ exit();
     $columnaModeloEquipo = "F";
     $columnaSerialEquipo = "G";
     $columnaVersionSO = "H";
+    $columnaAsignado = "AC";
 
-    $fila = 1;
-        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-    $fila++;
+    $spreadsheet = new Spreadsheet();
+    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+
+    $elemento = $hojaCalculo->getActiveSheet();
+
+    $hojita = $hojaCalculo->getSheet(0);
+
+    $cellIterator = $elemento->getRowIterator();
+
+    foreach ($hojita->getRowIterator() as $row) {
+        foreach ($row->getCellIterator() as $cell) {
+            $cellValue = $cell->getValue();
+        
+            if ($cellValue == $serialEquipo) {
+                $foundCell = $cell->getCoordinate();
+                list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+                break 2;  // Salir de ambos bucles
+            }
+
+        }
     }
+
+    if (!isset($foundCell)) {
+        $fila = 1;
+        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+        $fila++;
+    }
+    }
+
+
 
     $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
     $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
@@ -333,6 +382,7 @@ exit();
     $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
     $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
     $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
+    $elemento->setCellValue($columnaAsignado . $fila, "EN USO");
 
     $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
     $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
@@ -485,6 +535,8 @@ header("Location: $archivoPdf");
 
 echo "SE DESCARGO SU PDF";
 
+
 exit();
 }}
+
 ?>
