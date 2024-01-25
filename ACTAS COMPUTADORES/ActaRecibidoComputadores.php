@@ -90,36 +90,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $spreadsheet = new Spreadsheet();
         $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $elemento = $hojaCalculo->getActiveSheet();
-    
-        $hojita = $hojaCalculo->getSheet(0);
-    
-        $cellIterator = $sheet->getCellIterator();
-    
-        foreach ($cellIterator as $cell) {
-            
-            $cellValue = $cell->getValue();
-        
-            
-            if ($cellValue == $serialEquipo) {
-                
-                $foundCell = $cell->getCoordinate();
-                list($columna , $fila) = explode('', $foundCellCoordinate);
-                break;
-    
-            }
-        }
-    
-        if (!isset($foundCell)) {
-            $fila = 1;
-            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-            $fila++;
-        }
-        }
-    
         $columnaNombrePersona ="O" ;
         $columnaCedulaPersona ="Z" ;
-        $columnaTipoDeEquipo ="AA" ;
+        $columnaTipoDeEquipo ="Q" ;
         $columnaTipoDeEstado ="AB" ;
         $columnaNombreEquipo = "A" ;
         $columnaNombreProcesadorEquipo = "B" ;
@@ -130,6 +103,35 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $columnaSerialEquipo = "G";
         $columnaVersionSO = "H";
         $columnaAsignado = "AC";
+    
+        $spreadsheet = new Spreadsheet();
+        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+    
+        $elemento = $hojaCalculo->getActiveSheet();
+    
+        $hojita = $hojaCalculo->getSheet(1);
+    
+        $cellIterator = $elemento->getRowIterator();
+    
+        foreach ($hojita->getRowIterator() as $row) {
+            foreach ($row->getCellIterator() as $cell) {
+                $cellValue = $cell->getValue();
+            
+                if ($cellValue == $serialEquipo) {
+                    $foundCell = $cell->getCoordinate();
+                    list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+                    break 2;  // Salir de ambos bucles
+                }
+    
+            }
+        }
+    
+        if (!isset($foundCell)) {
+            $fila = 1;
+            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+            $fila++;
+        }
+        }
     
         $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
         $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
@@ -292,36 +294,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $spreadsheet = new Spreadsheet();
         $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $elemento = $hojaCalculo->getActiveSheet();
-    
-        $hojita = $hojaCalculo->getSheet(0);
-    
-        $cellIterator = $sheet->getCellIterator();
-    
-        foreach ($cellIterator as $cell) {
-            
-            $cellValue = $cell->getValue();
-        
-            
-            if ($cellValue == $serialEquipo) {
-                
-                $foundCell = $cell->getCoordinate();
-                list($columna , $fila) = explode('', $foundCellCoordinate);
-                break;
-    
-            }
-        }
-    
-        if (!isset($foundCell)) {
-            $fila = 1;
-            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-            $fila++;
-        }
-        }
-    
         $columnaNombrePersona ="O" ;
         $columnaCedulaPersona ="Z" ;
-        $columnaTipoDeEquipo ="AA" ;
+        $columnaTipoDeEquipo ="Q" ;
         $columnaTipoDeEstado ="AB" ;
         $columnaNombreEquipo = "A" ;
         $columnaNombreProcesadorEquipo = "B" ;
@@ -332,6 +307,35 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $columnaSerialEquipo = "G";
         $columnaVersionSO = "H";
         $columnaAsignado = "AC";
+    
+        $spreadsheet = new Spreadsheet();
+        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+    
+        $elemento = $hojaCalculo->getActiveSheet();
+    
+        $hojita = $hojaCalculo->getSheet(1);
+    
+        $cellIterator = $elemento->getRowIterator();
+    
+        foreach ($hojita->getRowIterator() as $row) {
+            foreach ($row->getCellIterator() as $cell) {
+                $cellValue = $cell->getValue();
+            
+                if ($cellValue == $serialEquipo) {
+                    $foundCell = $cell->getCoordinate();
+                    list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+                    break 2;  // Salir de ambos bucles
+                }
+    
+            }
+        }
+    
+        if (!isset($foundCell)) {
+            $fila = 1;
+            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+            $fila++;
+        }
+        }
     
         $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
         $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
