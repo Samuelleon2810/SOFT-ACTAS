@@ -75,6 +75,7 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
             'Psr\\Http\\Client\\' => 16,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
+            'Picqer\\Barcode\\' => 15,
             'PhpOption\\' => 10,
             'PhpOffice\\PhpWord\\' => 18,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
@@ -97,6 +98,10 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
             'Humbug\\SelfUpdate\\' => 18,
             'Humbug\\' => 7,
         ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -104,10 +109,15 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'DeepCopy\\' => 9,
+            'DASPRiD\\Enum\\' => 13,
         ),
         'C' => 
         array (
             'Complex\\' => 8,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
     );
 
@@ -265,6 +275,10 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'Picqer\\Barcode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/picqer/php-barcode-generator/src',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
@@ -313,6 +327,10 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             0 => __DIR__ . '/..' . '/padraic/humbug_get_contents/src/Humbug',
         ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qrcode/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -333,9 +351,17 @@ class ComposerStaticInit7a40182cf4d14cfc11c360083a1a7b48
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
     );
 

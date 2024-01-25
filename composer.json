@@ -13,6 +13,9 @@
         "mikehaertl/phpwkhtmltopdf": "^2.5",
         "mikehaertl/php-shellcommand": "^1.7",
         "mpdf/mpdf": "^8.2",
-        "mikehaertl/php-pdftk": "^0.13.1"
+        "mikehaertl/php-pdftk": "^0.13.1",
+        "bacon/bacon-qr-code": "^2.0",
+        "picqer/php-barcode-generator": "^2.4",
+        "endroid/qrcode": "^5.0"
     }
 }
