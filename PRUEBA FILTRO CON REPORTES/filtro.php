@@ -58,7 +58,8 @@
 
 
 <?php
-
+ini_set('memory_limit', '1024M');
+set_time_limit(300);
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -139,7 +140,76 @@ foreach ($hojita->getRowIterator() as $row) {
     // Verificar si se encontraron datos
     if ($encontrado) {
         // Imprimir o procesar la matriz de datos encontrados
-        print_r($matriz);
+        echo '<table class="tabla">';
+        echo '<thead>
+                <tr>
+                    <th>Nombre Equipo</th>
+                    <th>Procesador</th>
+                    <th>Disco Duro</th>
+                    <th>RAM</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Serial</th>
+                    <th>SO</th>
+                    <th>Actualizacion</th>
+                    <th>Office</th>
+                    <th>Cuenta Empresarial</th>
+                    <th>Propio</th>
+                    <th>Rentado</th>
+                    <th>SoftWare</th>
+                    <th>Usuario</th>
+                    <th>Departamento</th>
+                    <th>Equipo</th>
+                    <th>Teclado</th>
+                    <th>Monitor</th>
+                    <th>Mouse</th>
+                    <th>Validacion</th>
+                    <th>Cortex Palo Alto</th>
+                    <th>Estado</th>
+                    <th>Asignado</th>
+                </tr>
+              </thead>';
+              echo '<tbody>';
+        foreach ($matriz as $valor) {
+            echo '<tr>';
+            echo '<td>' . $valor[0] . '</td>';
+            echo '<td>' . $valor[1] . '</td>';
+            echo '<td>' . $valor[2] . '</td>';
+            echo '<td>' . $valor[3] . '</td>';
+            echo '<td>' . $valor[4] . '</td>';
+            echo '<td>' . $valor[5] . '</td>';
+            echo '<td>' . $valor[6] . '</td>';
+            echo '<td>' . $valor[7] . '</td>';
+            echo '<td>' . $valor[8] . '</td>';
+            echo '<td>' . $valor[9] . '</td>';
+            echo '<td>' . $valor[10] . '</td>';
+            echo '<td>' . $valor[11] . '</td>';
+            echo '<td>' . $valor[12] . '</td>';
+            echo '<td>' . $valor[13] . '</td>';
+            echo '<td>' . $valor[14] . '</td>';
+            echo '<td>' . $valor[15] . '</td>';
+            echo '<td>' . $valor[16] . '</td>';
+            echo '<td>' . $valor[19] . '</td>';
+            echo '<td>' . $valor[20] . '</td>';
+            echo '<td>' . $valor[21] . '</td>';
+            echo '<td>' . $valor[22] . '</td>';
+            echo '<td>' . $valor[23] . '</td>';
+            echo '<td>' . $valor[27] . '</td>';
+            echo '<td>' . $valor[28] . '</td>';
+
+            // Añade más celdas según sea necesario
+        
+            echo '</tr>';
+        }
+        echo '</tbody>';
+        echo '<tfoot>
+        <section class="seccion-botones">
+        <button value="Descargar Excel" class="botones">Descargar Excel</button>
+        <button value="Descargar PDF" class="botones">Descargar PDF</button>
+        </section>
+        </tfoot>';
+        echo '</table>';
+
     } else {
         echo "<h2>No se han encontrado dispositivos con estas características</h2>";
     }
@@ -147,5 +217,6 @@ foreach ($hojita->getRowIterator() as $row) {
 ?>
 
 </section>
+
 </body>
 </html>
