@@ -8,7 +8,7 @@
 </head>
 <body>
     <section class="ae">
-    <form action="filtro.php" method="post">
+    <form action="filtro.php" method="post" class="formulario-filtro">
     <label for="carac">POR CUAL CARACTERISTICA VAS A BUSCAR</label>
     <select name="carac" id="carac">
         <option value="F">MODELO</option>
@@ -53,12 +53,23 @@
         <label for="asignado">ES PROPIO</label>
         </section>  
         
+        <section class='seccion2'>
+        <input type="checkbox" name="asignado[]" value="NUEVO" id="checkbox5"> 
+        <label for="asignado">ES NUEVO</label>
+        </section>  
+
+        <section class='seccion2'>
+        <input type="checkbox" name="asignado[]" value="USADO" id="checkbox5"> 
+        <label for="asignado">ES USADO</label>
+        </section>  
+        
         <input type="submit" value="filtrar">
     </form>
 
 
 <?php
-ini_set('memory_limit', '1024M');
+session_start();
+ini_set('memory_limit', '2048M');
 set_time_limit(300);
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
 
@@ -83,37 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $encontrado = false;
     $matriz = [];
 
-    // Iterar sobre las filas de la hoja de cálculo
 
-    /*
-    foreach ($hojita->getRowIterator() as $row) {
-        $datosFila = [];
-        // Iterar sobre las celdas de la fila
-        foreach ($row->getCellIterator() as $cell) {
-            $cellValue = $cell->getValue();
-
-            // Verificar si la celda coincide con la característica de búsqueda
-            if ($cellValue === $caracteristica){
-                $encontrado = true;
-                $foundCell = $cell->getCoordinate();
-
-                // Obtener coordenadas de la celda encontrada
-                list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-
-                // Obtener datos de la fila encontrada
-                for ($col = $columna; $col <= $hojita->getHighestDataColumn(); $col++) {
-                    $valorCelda = $hojita->getCell($col . $fila)->getValue();
-                    $datosFila[] = $valorCelda;
-                }
-
-                // Almacenar datos de la fila encontrada en la matriz
-                $matriz[] = $datosFila;
-                break; // Salir del bucle después de encontrar la primera coincidencia
-            }
-        }
-    }
-*/
-
+if(empty($asignado)){
 foreach ($hojita->getRowIterator() as $row) {
     $datosFila = [];
 
@@ -135,8 +117,184 @@ foreach ($hojita->getRowIterator() as $row) {
         $matriz[] = $datosFila;
     }
 }
+}elseif($asignado){
 
+foreach ($asignado as $opcion) {
+    switch ($opcion){
+        case "EN USO":
 
+                foreach ($hojita->getRowIterator() as $row) {
+                    $datosFila = [];
+
+                    // Obtener el valor de la celda en la columna específica
+                    $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                    $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                    $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("AC");
+                    $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                    // Verificar si la celda coincide con la característica de búsqueda
+                    if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                        $encontrado = true; 
+                        // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                        foreach ($row->getCellIterator() as $cell) {
+                            $valorCelda = $cell->getValue();
+                            $datosFila[] = $valorCelda;
+                        }
+
+                        // Almacenar datos de la fila encontrada en la matriz
+                        $matriz[] = $datosFila;
+                    }
+                }
+
+            break;
+
+        case "EN BODEGA":
+
+            foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("AC");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                    }
+
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+                }
+            }
+
+            break;
+
+        case "PORTATIL":
+            
+            foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("Q");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                    }
+
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+                }
+            }
+
+            break;
+            
+        case "ESCRITORIO":
+
+            foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("Q");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                    }
+
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+                }
+            }
+
+            break;
+
+        case "RENTADO":
+            break;
+
+        case "PROPIO":
+            break;
+
+        case "NUEVO":
+
+            foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("AB");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                    }
+
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+                }
+            }
+
+            break;
+            
+        case "USADO":
+
+            foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+                $indiceCol2 = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("AB");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indiceCol2, $row->getRowIndex())->getValue();
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue === $caracteristica and $cellValue2 === $opcion) {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                    }
+
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+
+                }
+            }
+
+            break;
+    }
+}
+}
+foreach ($matriz as &$fila) {
+    foreach ($fila as &$valor) {
+        if ($valor === null || $valor === '') {
+            $valor = 'N/A'; 
+        }
+    }
+}
+
+$_SESSION['matriz'] = $matriz;
     // Verificar si se encontraron datos
     if ($encontrado) {
         // Imprimir o procesar la matriz de datos encontrados
@@ -203,10 +361,16 @@ foreach ($hojita->getRowIterator() as $row) {
         }
         echo '</tbody>';
         echo '<tfoot>
-        <section class="seccion-botones">
-        <button value="Descargar Excel" class="botones">Descargar Excel</button>
-        <button value="Descargar PDF" class="botones">Descargar PDF</button>
-        </section>
+        <tr>
+        <td colspan="29">
+          <section class="seccion-botones">
+            <form action="descarga.php" method="post">
+              <input type="submit" name="excel" value="Descargar Excel" class="botones">
+              <input type="submit" name="pdf" value="Descargar PDF" class="botones">
+            </form>
+          </section>
+        </td>
+      </tr>
         </tfoot>';
         echo '</table>';
 

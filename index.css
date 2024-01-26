@@ -111,31 +111,43 @@ justify-items: center;
 }
 
 .tabla{
+    padding-top: 20px;
     margin-top: 30px;
     padding: 20px;
     background-color: #01a5abb6;
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     table-layout:1px;
-    border: #e4000d 2px solid;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto; 
+    margin-left: 1900px;
 }
 
 table{
     border-radius: 30px;
     background-color: #01a5abb6;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
 .seccion-botones{
     display: flex;
     flex-direction: row;
     padding: 10px;
-
+    justify-content: left;
+    align-items: left;
+    align-self: left;
+    text-align: left;
 }
 button{
     margin: 10px;
 }
 
+.formulario-filtro{
+    display: block;
 
+}
 
 
 td ,th{
