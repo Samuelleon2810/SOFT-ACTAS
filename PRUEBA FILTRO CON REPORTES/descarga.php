@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../index.css">
+    <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descarga archivo</title>
 </head>
 <body>
     <section class="seccion-descarga">
-    <h1>LA DESCARGA COMENZARA PRONTO</h1>
-    <h2>si no empieza la descarga presiona el boton</h2>
-    <form action="descarga.php" action="post">
-        <input type="submit" value="Volver a descargar" class="botones">
-        
-    </form>
-    <button onclick="location='./filtro.php'">Volver</button>
     </section>
 
 
@@ -25,7 +19,8 @@ require "/Users/Admin/Documents/GitHub/prueba-codigo-actas/vendor/autoload.php";
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
+use PhpOffice\PhpSpreadsheet\IOFactory;
+require_once '/Users/Admin/Documents/GitHub/prueba-codigo-actas/vendor/tecnickcom/tcpdf/tcpdf.php';
 use Mpdf\Mpdf;
 
 
@@ -69,47 +64,76 @@ $guardado ='Reporte_Equipos_'.$fecha.'_'.$_SESSION['caracteristica'].'.xlsx';
       //  header('Content-Disposition: attachment;filename="' . $archivo . '"');
       //  header('Cache-Control: max-age=0');
         exit();
-    }
+    }elseif(isset($_POST['pdfe'])){
 
-}elseif(isset($_POST['pdf'])){
+        $conteoMatriz = count($matriz);
 
-    $spreadsheet = new Spreadsheet();
+        echo '<table class="tabla-descarga">';
+        echo '<thead>
+                <tr>
+                    <th>Nombre Equipo</th>
+                    <th>Procesador</th>
+                    <th>Disco Duro</th>
+                    <th>RAM</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Serial</th> 
+                    <th>Propio</th>
+                    <th>Rentado</th>
+                    <th>SoftWare</th>
+                    <th>Usuario</th>
+                    <th>Departamento</th>
+                    <th>Equipo</th>
+                    <th>Cortex Palo Alto</th>
+                    <th>Estado</th>
+                    <th>Asignado</th>
+                </tr>
+                </thead>';
+            echo '<tbody>';
+            foreach ($matriz as $indice => $valor) {
+                // Ignora el último elemento
+            echo '<tr>';
+            echo '<td>' . $valor[0] . '</td>';
+            echo '<td>' . $valor[1] . '</td>';
+            echo '<td>' . $valor[2] . '</td>';
+            echo '<td>' . $valor[3] . '</td>';
+            echo '<td>' . $valor[4] . '</td>';
+            echo '<td>' . $valor[5] . '</td>';
+            echo '<td>' . $valor[6] . '</td>';
+            echo '<td>' . $valor[11] . '</td>';
+            echo '<td>' . $valor[12] . '</td>';
+            echo '<td>' . $valor[13] . '</td>';
+            echo '<td>' . $valor[14] . '</td>';
+            echo '<td>' . $valor[15] . '</td>';
+            echo '<td>' . $valor[16] . '</td>';
+            echo '<td>' . $valor[23] . '</td>';
+            echo '<td>' . $valor[27] . '</td>';
+            $valor[28] = 'N/A';
+            echo '<td>' . $valor[28] . '</td>';
+            echo '</tr>';
+        }
+            echo '</tbody>';
+            echo '<tfoot>
+            <tr>
+            <td colspan="29">
+              <section class="seccion-botones">
+              <button onclick="location=`./filtro.php`">Volver</button>
+              <button class="botones" onclick="window.print()">Descarga PDF</button>
+              </section>
+            </td>
+          </tr>
+            </tfoot>';
+            echo '</table>';
 
-    $hoja = $spreadsheet->getActiveSheet();
-    
-    // Agregar datos a la hoja desde la matriz
-    $hoja->fromArray($_SESSION['matriz'], null, 'A1');
-    
-    $stream = fopen('php://temp', 'r+');
-    // Crear un objeto Writer para Xlsx (Excel 2007 y versiones posteriores)
-    $writer = new Xlsx($spreadsheet);
-    
-    // Guardar el contenido del Excel en el manejador de flujo temporal
-    $writer->save($stream);
-    
-    // Volver al principio del manejador de flujo temporal
-    rewind($stream);
 
-    $excelContent = stream_get_contents($stream);
-
-    $mpdf->WriteHTML($excelContent);
-
-    $mpdf = new Mpdf();
-
-    $mpdf->AddPage();
-    
-    $mpdf->WriteHTML($excelContent);
-    
-    header('Content-Type: application/pdf');
-    header('Content-Disposition: attachment;filename="Reporte_Equipos_'.$fecha.'.pdf"');
-    header('Cache-Control: max-age=0');
-    
-    // Salida directa al navegador
-    $mpdf->Output();
-
-}
 
 ?>
-
 </body>
 </html>
+
+<?php
+
+
+    }
+}
+?>

@@ -16,6 +16,8 @@
         "mikehaertl/php-pdftk": "^0.13.1",
         "bacon/bacon-qr-code": "^2.0",
         "picqer/php-barcode-generator": "^2.4",
-        "endroid/qrcode": "^5.0"
+        "endroid/qrcode": "^5.0",
+        "tecnickcom/tcpdf": "^6.6",
+        "dompdf/dompdf": "^2.0"
     }
 }

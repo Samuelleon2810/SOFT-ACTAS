@@ -124,10 +124,39 @@ justify-items: center;
     margin-left: 1900px;
 }
 
+.tabla-descarga {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    font-size: smaller;
+}
+
+.tabla-descarga th, .tabla-descarga td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tabla-descarga th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos adicionales para mejorar la apariencia en pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    .tabla-descarga {
+        overflow-x: scroll;
+        display: block;
+    }
+
+    .tabla-descarga th, .tabla-descarga td {
+        white-space: nowrap;
+    }
+}
+
 table{
     border-radius: 30px;
     background-color: #01a5abb6;
-    border-collapse: collapse;
     margin-bottom: 20px;
 }
 
@@ -139,6 +168,14 @@ table{
     align-items: left;
     align-self: left;
     text-align: left;
+}
+
+.seccion-botones button{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    justify-items: center;
 }
 
 .formulario-filtro{

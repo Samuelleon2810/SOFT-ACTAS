@@ -65,6 +65,7 @@
         </section>  
         
         <input type="submit" value="filtrar">
+        
     </form>
 
 
@@ -348,7 +349,35 @@ foreach ($asignado as $opcion) {
             break;
     }
 }
-}
+}elseif(empty($caracteristica)){
+
+    foreach ($hojita->getRowIterator() as $row) {
+        $datosFila = [];
+    
+        // Obtener el valor de la celda en la columna específica
+        $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("1");
+        $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+    
+        // Verificar si la celda coincide con la característica de búsqueda
+       
+            $encontrado = true; 
+    
+            // Iterar sobre las celdas de la fila y almacenar en el arreglo
+            foreach ($row->getCellIterator() as $cell) {
+                $valorCelda = $cell->getValue();
+                $datosFila[] = $valorCelda;
+                $cantDatos = count($datosFila);
+                if($cantDatos == 29){
+                    break;
+                }
+            }
+            array_pop($datosFila);
+            // Almacenar datos de la fila encontrada en la matriz
+            $matriz[] = $datosFila;
+        }
+    }
+
+
 foreach ($matriz as $fila) {
     foreach ($fila as $valor) {
         if ($valor === null || $valor === '') {
@@ -359,7 +388,7 @@ foreach ($matriz as $fila) {
 $conteoMatriz = count($matriz);
 
 $rows = count($matriz);
-$cols = count($matriz[0]);  
+$cols = count($matriz[1]);  
 
 $_SESSION['matriz'] = $matriz;
     // Verificar si se encontraron datos
@@ -397,7 +426,7 @@ $_SESSION['matriz'] = $matriz;
             echo '<tbody>';
             foreach ($matriz as $indice => $valor) {
                 // Ignora el último elemento
-                if ($indice === $conteoMatriz - 1) {
+                if ($indice === $conteoMatriz - 1 and $conteoMatriz != 1) {
                     continue;
                 }
             echo '<tr>';
@@ -437,7 +466,7 @@ $_SESSION['matriz'] = $matriz;
           <section class="seccion-botones">
             <form action="descarga.php" method="post">
               <input type="submit" name="excel" value="Descargar Excel" class="botones">
-              <input type="submit" name="pdf" value="Descargar PDF" class="botones">
+              <input type="submit" name="pdfe" value="Descargar PDF" class="botones">
             </form>
           </section>
         </td>
