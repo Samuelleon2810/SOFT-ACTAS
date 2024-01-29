@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/index.css">
+    <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILTRO Y REPORTES</title>
 </head>
@@ -73,9 +74,10 @@ ini_set('memory_limit', '2048M');
 set_time_limit(300);
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
 
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
+use PhpParser\Node\Expr\Cast\Array_;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -83,6 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $caracteristica = isset($_POST['busqueda']) ? $_POST['busqueda'] : "";
     $asignado = isset($_POST['asignado']) ? $_POST['asignado'] : "";
     $tipoCol = isset($_POST['carac']) ? $_POST['carac'] : "";
+
+    $_SESSION['caracteristica'] = $caracteristica;
 
     // Cargar hoja de cálculo
     $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
@@ -92,7 +96,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Inicializar variables para datos encontrados
     $encontrado = false;
+
     $matriz = [];
+
+    $encabezado = array(
+        'Nombre Equipo' , 
+        'Procesador' , 
+        'Disco Duro' , 
+        'RAM' , 
+        'Marca' , 
+        'Modelo',
+        'Serial',
+        'SO',
+        'Actualizacion',
+        'Office',
+        'Cuenta Empresarial',
+        'Propio',
+        'Rentado',
+        'Software',
+        'Usuario',
+        'Departamento',
+        'Equipo',
+        'Teclado',
+        'Monitor',
+        'Mouse',
+        'Validacion',
+        'Cortex Palo Alto',
+        'Estado',
+        'Asignado'
+    );
+
+
+
 
 
 if(empty($asignado)){
@@ -111,6 +146,10 @@ foreach ($hojita->getRowIterator() as $row) {
         foreach ($row->getCellIterator() as $cell) {
             $valorCelda = $cell->getValue();
             $datosFila[] = $valorCelda;
+            $cantDatos = count($datosFila);
+            if($cantDatos == 29){
+                break;
+            }
         }
 
         // Almacenar datos de la fila encontrada en la matriz
@@ -138,8 +177,12 @@ foreach ($asignado as $opcion) {
                         foreach ($row->getCellIterator() as $cell) {
                             $valorCelda = $cell->getValue();
                             $datosFila[] = $valorCelda;
+                            $cantDatos = count($datosFila);
+                            if($cantDatos == 29){
+                                break;
+                            }
                         }
-
+                        array_pop($datosFila);
                         // Almacenar datos de la fila encontrada en la matriz
                         $matriz[] = $datosFila;
                     }
@@ -164,8 +207,12 @@ foreach ($asignado as $opcion) {
                     foreach ($row->getCellIterator() as $cell) {
                         $valorCelda = $cell->getValue();
                         $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            break;
+                        }
                     }
-
+                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -190,8 +237,12 @@ foreach ($asignado as $opcion) {
                     foreach ($row->getCellIterator() as $cell) {
                         $valorCelda = $cell->getValue();
                         $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            break;
+                        }
                     }
-
+                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -216,8 +267,12 @@ foreach ($asignado as $opcion) {
                     foreach ($row->getCellIterator() as $cell) {
                         $valorCelda = $cell->getValue();
                         $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            break;
+                        }
                     }
-
+                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -248,8 +303,12 @@ foreach ($asignado as $opcion) {
                     foreach ($row->getCellIterator() as $cell) {
                         $valorCelda = $cell->getValue();
                         $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            break;
+                        }
                     }
-
+                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -274,25 +333,33 @@ foreach ($asignado as $opcion) {
                     foreach ($row->getCellIterator() as $cell) {
                         $valorCelda = $cell->getValue();
                         $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            break;
+                        }
                     }
-
+                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
-
+                
                 }
             }
-
+            
             break;
     }
 }
 }
-foreach ($matriz as &$fila) {
-    foreach ($fila as &$valor) {
+foreach ($matriz as $fila) {
+    foreach ($fila as $valor) {
         if ($valor === null || $valor === '') {
             $valor = 'N/A'; 
         }
     }
 }
+$conteoMatriz = count($matriz);
+
+$rows = count($matriz);
+$cols = count($matriz[0]);  
 
 $_SESSION['matriz'] = $matriz;
     // Verificar si se encontraron datos
@@ -326,9 +393,13 @@ $_SESSION['matriz'] = $matriz;
                     <th>Estado</th>
                     <th>Asignado</th>
                 </tr>
-              </thead>';
-              echo '<tbody>';
-        foreach ($matriz as $valor) {
+                </thead>';
+            echo '<tbody>';
+            foreach ($matriz as $indice => $valor) {
+                // Ignora el último elemento
+                if ($indice === $conteoMatriz - 1) {
+                    continue;
+                }
             echo '<tr>';
             echo '<td>' . $valor[0] . '</td>';
             echo '<td>' . $valor[1] . '</td>';
@@ -353,8 +424,8 @@ $_SESSION['matriz'] = $matriz;
             echo '<td>' . $valor[22] . '</td>';
             echo '<td>' . $valor[23] . '</td>';
             echo '<td>' . $valor[27] . '</td>';
+            $valor[28] = 'N/A';
             echo '<td>' . $valor[28] . '</td>';
-
             // Añade más celdas según sea necesario
         
             echo '</tr>';

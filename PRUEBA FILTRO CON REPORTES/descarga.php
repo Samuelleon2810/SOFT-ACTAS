@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descarga archivo</title>
 </head>
 <body>
-    <h1>SU REPORTE SE ESTA DESCARGANDO</h1>
+    <section class="seccion-descarga">
+    <h1>LA DESCARGA COMENZARA PRONTO</h1>
     <h2>si no empieza la descarga presiona el boton</h2>
     <form action="descarga.php" action="post">
         <input type="submit" value="Volver a descargar" class="botones">
+        
     </form>
-
     <button onclick="location='./filtro.php'">Volver</button>
-</body>
-</html>
+    </section>
+
 
 
 <?php
@@ -29,7 +31,7 @@ use Mpdf\Mpdf;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-
+$matriz = $_SESSION['matriz'];
 
 if(isset($_POST['excel'])){
 
@@ -38,17 +40,36 @@ if(isset($_POST['excel'])){
 
     $hoja = $spreadsheet->getActiveSheet();
 
-    $indice = 1;
-    foreach($_SESSION['matriz'] as &$valor){
-    $hoja->fromArray($valor, null, 'A'.$indice.'');
-    $indice++;
+   $rows = count($matriz);
+   $cols = count($matriz[0]);
+ //  echo $rows .'<br>';
+//echo $cols . '<br>';
+//echo $matriz[0][1];
+
+//echo '<pre>';
+//var_dump($matriz);
+//echo '</pre>';
+
+for ($row = 1; $row <= $rows; $row++) {
+    for ($col = 1; $col <= $cols; $col++) {
+        $hoja->setCellValueByColumnAndRow($col, $row, ($matriz[$row - 1][$col - 1]));
     }
+}
 
     $writer = new Xlsx($spreadsheet);
 
     $fecha = date('d_m_y');
+    $hora = date('H:M:S');
+$guardado ='Reporte_Equipos_'.$fecha.'_'.$_SESSION['caracteristica'].'.xlsx';
+    $writer->save($guardado);
 
-    $writer->save('Reporte_Equipos_'.$fecha.'.xlsx');
+    header("Location:$guardado");
+
+      //  header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      //  header('Content-Disposition: attachment;filename="' . $archivo . '"');
+      //  header('Cache-Control: max-age=0');
+        exit();
+    }
 
 }elseif(isset($_POST['pdf'])){
 
@@ -88,5 +109,7 @@ if(isset($_POST['excel'])){
 
 }
 
-}
 ?>
+
+</body>
+</html>

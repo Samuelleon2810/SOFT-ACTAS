@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
     <title>Acta Recibido Computadores</title>
 </head>
 <body>
