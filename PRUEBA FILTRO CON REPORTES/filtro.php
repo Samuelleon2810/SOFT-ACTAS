@@ -149,10 +149,10 @@ foreach ($hojita->getRowIterator() as $row) {
             $datosFila[] = $valorCelda;
             $cantDatos = count($datosFila);
             if($cantDatos == 29){
+                array_pop($datosFila);
                 break;
             }
         }
-
         // Almacenar datos de la fila encontrada en la matriz
         $matriz[] = $datosFila;
     }
@@ -180,10 +180,10 @@ foreach ($asignado as $opcion) {
                             $datosFila[] = $valorCelda;
                             $cantDatos = count($datosFila);
                             if($cantDatos == 29){
+                                array_pop($datosFila);
                                 break;
                             }
                         }
-                        array_pop($datosFila);
                         // Almacenar datos de la fila encontrada en la matriz
                         $matriz[] = $datosFila;
                     }
@@ -210,10 +210,10 @@ foreach ($asignado as $opcion) {
                         $datosFila[] = $valorCelda;
                         $cantDatos = count($datosFila);
                         if($cantDatos == 29){
+                            array_pop($datosFila);
                             break;
                         }
                     }
-                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -240,10 +240,10 @@ foreach ($asignado as $opcion) {
                         $datosFila[] = $valorCelda;
                         $cantDatos = count($datosFila);
                         if($cantDatos == 29){
+                            array_pop($datosFila);
                             break;
                         }
                     }
-                    array_pop($datosFila);
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -270,6 +270,7 @@ foreach ($asignado as $opcion) {
                         $datosFila[] = $valorCelda;
                         $cantDatos = count($datosFila);
                         if($cantDatos == 29){
+                            array_pop($datosFila);
                             break;
                         }
                     }
@@ -282,9 +283,44 @@ foreach ($asignado as $opcion) {
             break;
 
         case "RENTADO":
+
+                        foreach ($hojita->getRowIterator() as $row) {
+                $datosFila = [];
+
+                // Obtener el valor de la celda en la columna específica
+                $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($tipoCol);
+                $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
+
+                $indiceRentado = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("L");
+                $cellValue = $hojita->getCellByColumnAndRow($indiceRentado, $row->getRowIndex())->getValue();
+
+                $indicePropio = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("AB");
+                $cellValue2 =$hojita->getCellByColumnAndRow($indicePropio, $row->getRowIndex())->getValue();
+
+                // Verificar si la celda coincide con la característica de búsqueda
+                if ($cellValue2 === $caracteristica and $cellValue === "X") {
+                    $encontrado = true; 
+                    // Iterar sobre las celdas de la fila y almacenar en el arreglo
+                    foreach ($row->getCellIterator() as $cell) {
+                        $valorCelda = $cell->getValue();
+                        $datosFila[] = $valorCelda;
+                        $cantDatos = count($datosFila);
+                        if($cantDatos == 29){
+                            array_pop($datosFila);
+                            break;
+                        }
+                    }
+                    
+                    // Almacenar datos de la fila encontrada en la matriz
+                    $matriz[] = $datosFila;
+                
+                }
+            }
+
             break;
 
         case "PROPIO":
+        
             break;
 
         case "NUEVO":
@@ -306,10 +342,11 @@ foreach ($asignado as $opcion) {
                         $datosFila[] = $valorCelda;
                         $cantDatos = count($datosFila);
                         if($cantDatos == 29){
+                            array_pop($datosFila);
                             break;
                         }
                     }
-                    array_pop($datosFila);
+                    
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 }
@@ -336,10 +373,11 @@ foreach ($asignado as $opcion) {
                         $datosFila[] = $valorCelda;
                         $cantDatos = count($datosFila);
                         if($cantDatos == 29){
+                            array_pop($datosFila);
                             break;
                         }
                     }
-                    array_pop($datosFila);
+                    
                     // Almacenar datos de la fila encontrada en la matriz
                     $matriz[] = $datosFila;
                 
@@ -355,7 +393,7 @@ foreach ($asignado as $opcion) {
         $datosFila = [];
     
         // Obtener el valor de la celda en la columna específica
-        $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("1");
+        $indiceCol = PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString("01");
         $cellValue = $hojita->getCellByColumnAndRow($indiceCol, $row->getRowIndex())->getValue();
     
         // Verificar si la celda coincide con la característica de búsqueda
@@ -368,10 +406,10 @@ foreach ($asignado as $opcion) {
                 $datosFila[] = $valorCelda;
                 $cantDatos = count($datosFila);
                 if($cantDatos == 29){
+                    array_pop($datosFila);
                     break;
                 }
             }
-            array_pop($datosFila);
             // Almacenar datos de la fila encontrada en la matriz
             $matriz[] = $datosFila;
         }
@@ -388,7 +426,7 @@ foreach ($matriz as $fila) {
 $conteoMatriz = count($matriz);
 
 $rows = count($matriz);
-$cols = count($matriz[1]);  
+$cols = count($matriz[0]);  
 
 $_SESSION['matriz'] = $matriz;
     // Verificar si se encontraron datos
@@ -426,9 +464,9 @@ $_SESSION['matriz'] = $matriz;
             echo '<tbody>';
             foreach ($matriz as $indice => $valor) {
                 // Ignora el último elemento
-                if ($indice === $conteoMatriz - 1 and $conteoMatriz != 1) {
-                    continue;
-                }
+                // if ($indice === $conteoMatriz - 1 and $conteoMatriz != 1) {
+                //     continue;
+                // }
             echo '<tr>';
             echo '<td>' . $valor[0] . '</td>';
             echo '<td>' . $valor[1] . '</td>';
@@ -484,3 +522,8 @@ $_SESSION['matriz'] = $matriz;
 
 </body>
 </html>
+
+
+
+
+
