@@ -51,7 +51,8 @@
 
 <?php
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
-
+ini_set('memory_limit', '2048M');
+set_time_limit(300);
 //extensiones para excel
 use PhpOffice\PhpWord\Writer\Word2007;
 use PhpOffice\PhpWord\SimpleType\Jc;
@@ -62,7 +63,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpWord\Element\TextRun;
 use Mikehaertl\ShellCommand\Command;
-use Mpdf\Mpdf;
 use PhpOffice\PhpWord\Writer\HTML;
 
 
@@ -76,11 +76,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($tipoEquipo === "escritorio"){
 
-  //      echo "<label for='Perifericos'>Ingrese las especificaciones de los perifericos:</label>\n";
-//echo "<input type='text' placeholder='Raton,Teclado....' name='periferico' required>\n";
-//echo "<input type='submit' value='Descargar y Llenar' name='enviarInfo'>\n";
 
-//if($_POST['enviarInfo']){
     $nombreUsuario = $_POST['nombre'];
     $cedulaUsuario = $_POST['cedula'];
     $tipoEquipo = $_POST['tipoEquipo'];
@@ -93,12 +89,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
-   // $periferico = $_POST['periferico']; 
-//}else{
-  //      echo "por favor llene los campos para generar su documento";
-   // }
-
-    //escritura en excel
 
     $columnaNombrePersona ="O" ;
     $columnaCedulaPersona ="Z" ;
@@ -119,11 +109,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $elemento = $hojaCalculo->getActiveSheet();
 
-    $hojita = $hojaCalculo->getSheet(1);
-
     $cellIterator = $elemento->getRowIterator();
 
-    foreach ($hojita->getRowIterator() as $row) {
+    foreach ($elemento->getRowIterator() as $row) {
         foreach ($row->getCellIterator() as $cell) {
             $cellValue = $cell->getValue();
         
@@ -191,7 +179,7 @@ $section->addText("ACTA DE ENTREGA DE EQUIPO DE ESCRITORIO", $titleFontStyle, $p
 $fechaActual = date('a los d/m/Y');
 $normalFontStyle = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH);
 $normalFontStyleConNegrita = array('name' => 'Century Gothic', 'size' => 10,5, 'color' => '1B2232' , 'alignment' => Jc::BOTH , 'bold' => true);
-// Texto de la primera parte del acta
+
 $meses = [
     'Enero',
     'Febrero',
@@ -231,7 +219,7 @@ $specifications = [
     "DISCO DURO" => $almacenamientoEquipo,
     "MEMORIA RAM" => $RAMEquipo,
     "NOMBRE DEL EQUIPO" => $nombreEquipo,
-    "TECLADO Y MOUSE" => $periferico, // Debes llenar este valor según tus necesidades
+    "TECLADO Y MOUSE" => "SI",
 ];
 
 
@@ -240,12 +228,12 @@ foreach ($specifications as $label => $value) {
 }
 
 
-$section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado físico. $estadoEquipo, es responsable del computador de su información y manejo de la misma." , $normalFontStyle , $justificar);
-$section->addText("\nEl equipo cuenta con el siguiente software instalado: Windows 10 Pro, Office 365 Empresas, Navegador web Chrome, Adobe Pdf, Microsoft Teams." , $normalFontStyle , $justificar);
+$section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado físico. $estadoEquipo, es responsable del computador de su información y manejo de la misma."  , $normalFontStyle);
+$section->addText("\nEl equipo cuenta con el siguiente software instalado: Windows 10 Pro, Office 365 Empresas, Navegador web Chrome, Adobe Pdf, Microsoft Teams." , $normalFontStyle);
 
 
-$section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran ESTADOPERIFERICOS y en las condiciones adecuadas para recibirlo sin ninguna salvedad. Después de entregado es responsabilidad de la persona brindar buen uso." , $normalFontStyle , $justificar);
-$section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle , $justificar);
+$section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran en buen estado y en las condiciones adecuadas para recibirlo sin ninguna salvedad. Después de entregado es responsabilidad de la persona brindar buen uso." , $normalFontStyle);
+$section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle);
 
 
 $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
@@ -280,29 +268,20 @@ $objWriter->save($archivoWord);
 // Redireccionar a la descarga del documento Word
 header("Location: $archivoWord");
 
+unset($phpWord);
+unset($section);
+unset($textRun);
+unset($objWriter);
+
+$hojaCalculo->disconnectWorksheets();
+
+unset($spreadsheet);
+unset($hojaCalculo);
+unset($elemento);
+unset($hojita);
+unset($writer);
+
 echo "SE DESCARGO SU WORD";
-
-$archivoWord = 'C:Users/Admin/Downloads/Acta_Entrega_Computador_Escritorio_' . $nombreUsuario . '.docx';
-
-// Ruta del archivo PDF de salida
-$archivoPdf = 'C:Users/Admin/Downloads/Acta_Entrega_Computador_Escritorio_' . $nombreUsuario . '.pdf';
-
-// Cargar el documento Word
-$phpWord = IOFactory::load($archivoWord);
-
-// Guardar el documento Word en HTML temporal
-$archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
-$objWriter = IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save($archivoHtml);
-
-// Convertir el archivo HTML a PDF
-$command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
-$command->execute();
-
-// Redireccionar o hacer algo con el PDF generado
-header("Location: $archivoPdf");
-
-echo "SE DESCARGO SU PDF";
 
 exit();
 
@@ -345,11 +324,9 @@ exit();
 
     $elemento = $hojaCalculo->getActiveSheet();
 
-    $hojita = $hojaCalculo->getSheet(0);
-
     $cellIterator = $elemento->getRowIterator();
 
-    foreach ($hojita->getRowIterator() as $row) {
+    foreach ($elemento->getRowIterator() as $row) {
         foreach ($row->getCellIterator() as $cell) {
             $cellValue = $cell->getValue();
         
@@ -474,10 +451,10 @@ foreach ($specifications as $label => $value) {
 }
 
 
-$section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado físico. \n Equipo $estadoEquipo, usted  es responsable del computador de su información y manejo de la misma." , $normalFontStyle , $justificar);
-$section->addText("\nEl equipo cuenta con el siguiente software instalado: Windows 10 Pro, Office 365 Empresas, Navegador web Chrome, Adobe Pdf, Microsoft Teams." , $normalFontStyle , $justificar);
+$section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado físico. \n Equipo $estadoEquipo, usted  es responsable del computador de su información y manejo de la misma." , $normalFontStyle);
+$section->addText("\nEl equipo cuenta con el siguiente software instalado: Windows 10 Pro, Office 365 Empresas, Navegador web Chrome, Adobe Pdf, Microsoft Teams." , $normalFontStyle);
 
-$section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle , $justificar);
+$section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle);
 
 
 $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
@@ -513,29 +490,6 @@ $objWriter->save($archivoWord);
 header("Location: $archivoWord");
 
 echo "SE DESCARGO SU WORD";
-
-$archivoWord = 'C:Users/Admin/Downloads/Acta_Entrega_Computador_Portatil' . $nombreUsuario . '.docx';
-
-// Ruta del archivo PDF de salida
-$archivoPdf = 'C:Users/Admin/Downloads/Acta_Entrega_Computador_Portatil' . $nombreUsuario . '.pdf';
-
-// Cargar el documento Word
-$phpWord = IOFactory::load($archivoWord);
-
-// Guardar el documento Word en HTML temporal
-$archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
-$objWriter = IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save($archivoHtml);
-
-// Convertir el archivo HTML a PDF
-$command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
-$command->execute();
-
-// Redireccionar o hacer algo con el PDF generado
-header("Location: $archivoPdf");
-
-echo "SE DESCARGO SU PDF";
-
 
 exit();
 }}
