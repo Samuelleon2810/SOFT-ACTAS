@@ -46,30 +46,20 @@
 <input type="text" placeholder="10 PRO" name="versionSO" required>
 <input type="submit" value="enviar" name="enviar">
 </form>    
-</body>
-</html>
 
 <?php
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
-ini_set('memory_limit', '2048M');
-set_time_limit(300);
-//extensiones para excel
-use PhpOffice\PhpWord\Writer\Word2007;
-use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Font;
-use PhpOffice\PhpWord\Shared\Converter;
 
+
+//extensiones para excel
+use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpWord\Element\TextRun;
-use Mikehaertl\ShellCommand\Command;
-use PhpOffice\PhpWord\Writer\HTML;
 
 
 
-
-
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if(isset($_POST['enviar'])){
 
     $tipoEquipo = $_POST['tipoEquipo'];
 
@@ -90,64 +80,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
 
-    $columnaNombrePersona ="O" ;
-    $columnaCedulaPersona ="Z" ;
-    $columnaTipoDeEquipo ="Q" ;
-    $columnaTipoDeEstado ="AB" ;
-    $columnaNombreEquipo = "A" ;
-    $columnaNombreProcesadorEquipo = "B" ;
-    $columnaAlmacenamientoEquipo = "C" ;
-    $columnaRAMEquipo = "D";
-    $columnaMarcaEquipo = "E";
-    $columnaModeloEquipo = "F";
-    $columnaSerialEquipo = "G";
-    $columnaVersionSO = "H";
-    $columnaAsignado = "AC";
+    echo "<form action='actualizarInventario.php'>
+<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
+<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
+<input type='hidden' name='tipoEquipo' value='<?php echo $tipoEquipo?>'>
+<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
+<input type='hidden' name='nombreEquipo' value='<?php echo $nombreEquipo?>'>
+<input type='hidden' name='procesadorEquipo' value='<?php echo $nombreProcesador?>'>
+<input type='hidden' name='almacenamientoEquipo' value='<?php echo $almacenamientoEquipo?>'>
+<input type='hidden' name='memoriaRAM' value='<?php echo $RAMEquipo?>'>
+<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
+<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
+<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
+<input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
+<input type='submit' name='actualizarExcel' class='botones'>
+</form>
+";
 
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-
-    $elemento = $hojaCalculo->getActiveSheet();
-
-    $cellIterator = $elemento->getRowIterator();
-
-    foreach ($elemento->getRowIterator() as $row) {
-        foreach ($row->getCellIterator() as $cell) {
-            $cellValue = $cell->getValue();
-        
-            if ($cellValue == $serialEquipo) {
-                $foundCell = $cell->getCoordinate();
-                list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-                break 2;  // Salir de ambos bucles
-            }
-
-        }
-    }
-
-    if (!isset($foundCell)) {
-        $fila = 1;
-        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-        $fila++;
-    }
-    }
-    
-
-    $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-    $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-    $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
-    $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
-    $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
-    $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
-    $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-    $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-    $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-    $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
-    $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
-    $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-    $elemento->setCellValue($columnaAsignado . $fila, "EN USO");
-
-    $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-    $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
 
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -160,7 +109,7 @@ $section->addImage(
     $imagePath,
     array(
         'width' => Converter::cmToPixel(3),
-        'height' => Converter::cmToPixel(2),      
+        'height' => Converter::cmToPixel(1.5),      
         'marginTop' => Converter::cmToPixel(1), 
     )
 );
@@ -235,6 +184,7 @@ $section->addText("\nEl equipo cuenta con el siguiente software instalado: Windo
 $section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran en buen estado y en las condiciones adecuadas para recibirlo sin ninguna salvedad. Después de entregado es responsabilidad de la persona brindar buen uso." , $normalFontStyle);
 $section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle);
 
+$section->addText("\nSe deja en claro que el equipo no cuenta con nungun tipo de seguro contra robo perdida o cualquier daño, es total responsabilidad quien recibe y firma", $normalFontStyle , $justificar);
 
 $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
 
@@ -256,34 +206,36 @@ $section->addImage(
     $imagePathInfo,
     array(
         'width' => Converter::cmToPixel(12),
-        'height' => Converter::cmToPixel(1.5),      
+        'height' => Converter::cmToPixel(1),      
         'marginTop' => Converter::cmToPixel(1), 
     )
 );
 
 $archivoWord = 'Acta_Entrega_Computador_Escritorio_' . $nombreUsuario . '.docx';
+
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
 $objWriter->save($archivoWord);
 
 // Redireccionar a la descarga del documento Word
 header("Location: $archivoWord");
 
-unset($phpWord);
-unset($section);
-unset($textRun);
-unset($objWriter);
+    unset($phpWord);
+    unset($section);
+    unset($textRun);
+    unset($objWriter);
 
-$hojaCalculo->disconnectWorksheets();
+    $hojaCalculo->disconnectWorksheets();
 
-unset($spreadsheet);
-unset($hojaCalculo);
-unset($elemento);
-unset($hojita);
-unset($writer);
+    unset($spreadsheet);
+    unset($hojaCalculo);
+    unset($elemento);
+    unset($hojita);
+    unset($writer);
 
 echo "SE DESCARGO SU WORD";
 
-exit();
+//exit();
 
 
 
@@ -303,73 +255,23 @@ exit();
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
-    //escritura en excel
 
-    $columnaNombrePersona ="O" ;
-    $columnaCedulaPersona ="Z" ;
-    $columnaTipoDeEquipo ="AA" ;
-    $columnaTipoDeEstado ="AB" ;
-    $columnaNombreEquipo = "A" ;
-    $columnaNombreProcesadorEquipo = "B" ;
-    $columnaAlmacenamientoEquipo = "C" ;
-    $columnaRAMEquipo = "D";
-    $columnaMarcaEquipo = "E";
-    $columnaModeloEquipo = "F";
-    $columnaSerialEquipo = "G";
-    $columnaVersionSO = "H";
-    $columnaAsignado = "AC";
-
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-
-    $elemento = $hojaCalculo->getActiveSheet();
-
-    $cellIterator = $elemento->getRowIterator();
-
-    foreach ($elemento->getRowIterator() as $row) {
-        foreach ($row->getCellIterator() as $cell) {
-            $cellValue = $cell->getValue();
-        
-            if ($cellValue == $serialEquipo) {
-                $foundCell = $cell->getCoordinate();
-                list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-                break 2;  // Salir de ambos bucles
-            }
-
-        }
-    }
-
-    if (!isset($foundCell)) {
-        $fila = 1;
-        while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-        $fila++;
-    }
-    }
-
-
-
-    $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-    $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-    $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
-    $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
-    $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
-    $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
-    $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-    $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-    $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-    $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
-    $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
-    $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-    $elemento->setCellValue($columnaAsignado . $fila, "EN USO");
-
-    $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-    $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-
-
-    //escritura en word
-    
-        //creamos un arreglo asociativo con los datos anteriores
-
+    echo "<form action='actualizarInventario.php' method='post'>
+<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
+<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
+<input type='hidden' name='tipoEquipo' value='<?php echo $tipoEquipo?>'>
+<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
+<input type='hidden' name='nombreEquipo' value='<?php echo $nombreEquipo?>'>
+<input type='hidden' name='procesadorEquipo' value='<?php echo $nombreProcesador?>'>
+<input type='hidden' name='almacenamientoEquipo' value='<?php echo $almacenamientoEquipo?>'>
+<input type='hidden' name='memoriaRAM' value='<?php echo $RAMEquipo?>'>
+<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
+<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
+<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
+<input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
+<input type='submit' name='actualizarExcel' class='botones'>
+</form>
+";
 
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 //$command = new Mikehaertl\ShellCommand\Command();
@@ -384,7 +286,7 @@ $section->addImage(
     $imagePath,
     array(
         'width' => Converter::cmToPixel(3),
-        'height' => Converter::cmToPixel(2),      
+        'height' => Converter::cmToPixel(1.5),      
         'marginTop' => Converter::cmToPixel(1), 
     )
 );
@@ -454,6 +356,7 @@ foreach ($specifications as $label => $value) {
 $section->addText("\nAl momento de recibir el equipo aquí especificado se realizaron las pruebas de funcionamiento y se encuentra en buen estado físico. \n Equipo $estadoEquipo, usted  es responsable del computador de su información y manejo de la misma." , $normalFontStyle);
 $section->addText("\nEl equipo cuenta con el siguiente software instalado: Windows 10 Pro, Office 365 Empresas, Navegador web Chrome, Adobe Pdf, Microsoft Teams." , $normalFontStyle);
 
+$section->addText("\nSe deja en claro que el equipo no cuenta con nungun tipo de seguro contra robo perdida o cualquier daño, es total responsabilidad quien recibe y firma", $normalFontStyle , $justificar);
 $section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle);
 
 
@@ -477,7 +380,7 @@ $section->addImage(
     $imagePathInfo,
     array(
         'width' => Converter::cmToPixel(12),
-        'height' => Converter::cmToPixel(1.5),      
+        'height' => Converter::cmToPixel(1),      
         'marginTop' => Converter::cmToPixel(1), 
     )
 );
@@ -491,7 +394,25 @@ header("Location: $archivoWord");
 
 echo "SE DESCARGO SU WORD";
 
-exit();
+//exit();
 }}
 
 ?>
+<form action='actualizarInventario.php'>
+<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
+<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
+<input type='hidden' name='tipoEquipo' value='<?php echo $tipoEquipo?>'>
+<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
+<input type='hidden' name='nombreEquipo' value='<?php echo $nombreEquipo?>'>
+<input type='hidden' name='procesadorEquipo' value='<?php echo $nombreProcesador?>'>
+<input type='hidden' name='almacenamientoEquipo' value='<?php echo $almacenamientoEquipo?>'>
+<input type='hidden' name='memoriaRAM' value='<?php echo $RAMEquipo?>'>
+<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
+<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
+<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
+<input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
+<input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
+</form>
+
+</body>
+</html>

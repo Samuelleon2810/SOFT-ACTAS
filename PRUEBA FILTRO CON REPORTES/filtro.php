@@ -545,6 +545,19 @@ $_SESSION['matriz'] = $matriz;
         </tfoot>';
         echo '</table>';
 
+    unset($phpWord);
+    unset($section);
+    unset($textRun);
+    unset($objWriter);
+
+    $hojaCalculo->disconnectWorksheets();
+
+    unset($spreadsheet);
+    unset($hojaCalculo);
+    unset($elemento);
+    unset($hojita);
+    unset($writer);
+
     } else {
         echo "<h2>No se han encontrado dispositivos con estas características</h2>";
     }
