@@ -44,6 +44,23 @@
 <input type="text" placeholder="JN1TVV1" name="serialEquipo" required>
 <label for="versionSO">Ingrese la versiòn del sistema operativo:</label>
 <input type="text" placeholder="10 PRO" name="versionSO" required>
+<label for="departamento">Ingrese el departamento al que pertenece el responsable del equipo:</label>
+<input type="text" placeholder="FINANCIERA, PRODUCCION" name="departamento" required>
+
+
+<label for="cortex">¿El equipo cuenta con el cortex?:</label>
+<select id="" name="cortex" required>
+    <option value="ok">SI</option>
+    <option value="no">NO</option>
+</select>
+
+    <label for="glpi">¿El equipo cuenta con el script de inventario?:</label>
+<select id="" name="glpi" required>
+    <option value="ok">SI</option>
+    <option value="no">NO</option>
+</select>
+
+
 <input type="submit" value="enviar" name="enviar">
 </form>    
 
@@ -79,23 +96,9 @@ if(isset($_POST['enviar'])){
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
-
-    echo "<form action='actualizarInventario.php'>
-<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
-<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
-<input type='hidden' name='tipoEquipo' value='<?php echo $tipoEquipo?>'>
-<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
-<input type='hidden' name='nombreEquipo' value='<?php echo $nombreEquipo?>'>
-<input type='hidden' name='procesadorEquipo' value='<?php echo $nombreProcesador?>'>
-<input type='hidden' name='almacenamientoEquipo' value='<?php echo $almacenamientoEquipo?>'>
-<input type='hidden' name='memoriaRAM' value='<?php echo $RAMEquipo?>'>
-<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
-<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
-<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
-<input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
-<input type='submit' name='actualizarExcel' class='botones'>
-</form>
-";
+    $departamento = $_POST['departamento'];
+    $cortex = $_POST['cortex'];
+    $glpi = $_POST['glpi'];
 
 
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -255,23 +258,10 @@ echo "SE DESCARGO SU WORD";
     $modeloEquipo = $_POST['modeloEquipo'];
     $serialEquipo = $_POST['serialEquipo'];
     $versionSO = $_POST['versionSO'];
+    $departamento = $_POST['departamento'];
+    $cortex = $_POST['cortex'];
+    $glpi = $_POST['glpi'];
 
-    echo "<form action='actualizarInventario.php' method='post'>
-<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
-<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
-<input type='hidden' name='tipoEquipo' value='<?php echo $tipoEquipo?>'>
-<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
-<input type='hidden' name='nombreEquipo' value='<?php echo $nombreEquipo?>'>
-<input type='hidden' name='procesadorEquipo' value='<?php echo $nombreProcesador?>'>
-<input type='hidden' name='almacenamientoEquipo' value='<?php echo $almacenamientoEquipo?>'>
-<input type='hidden' name='memoriaRAM' value='<?php echo $RAMEquipo?>'>
-<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
-<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
-<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
-<input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
-<input type='submit' name='actualizarExcel' class='botones'>
-</form>
-";
 
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 //$command = new Mikehaertl\ShellCommand\Command();
@@ -411,6 +401,9 @@ echo "SE DESCARGO SU WORD";
 <input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
 <input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
 <input type='hidden' name='versionSO' value='<?php echo $versionSO?>'>
+<input type='hidden' name='departamento' value='<?php echo $departamento?>'>
+<input type='hidden' name='cortex' value='<?php echo $cortex?>'>
+<input type='hidden' name='glpi' value='<?php echo $glpi?>'>
 <input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
 </form>
 

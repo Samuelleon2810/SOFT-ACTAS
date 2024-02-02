@@ -51,10 +51,11 @@
 <input type="password" placeholder="abc123 " name="Contraseña" required>
 <label for="PIN">Ingresar el PIN del equipo:</label>
 <input type="tel" placeholder="0000" name="PIN" required>
+<label for="PIN">Ingresar el departamento de a quien se le entrga el equipo:</label>
+<input type="tel" placeholder="CONTABILIDAD" name="departamento" required>
 <input type="submit" value="enviar">
 </form>
-</body>
-</html>
+
 
 <?php
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
@@ -277,3 +278,28 @@ $PIN = $_POST['PIN'];
     exit();
 }
 ?>
+
+<form action='actualizarInventario.php'>
+<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
+<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
+<input type='hidden' name='Asignado' value='<?php echo $nombreAsignado?>'>
+<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
+<input type='hidden' name='corporativo' value='<?php echo $Corporativo?>'>
+<input type='hidden' name='Imei1' value='<?php echo $imei1?>'>
+<input type='hidden' name='Imei2' value='<?php echo $imei2?>'>
+<input type='hidden' name='contraseña' value='<?php echo $contraseñaCorreo?>'>
+<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
+<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
+<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
+<input type='hidden' name='Numero' value='<?php echo $numero?>'>
+<input type='hidden' name='departamento' value='<?php echo $departamento?>'>
+<input type='hidden' name='SIM' value='<?php echo $SIM?>'>
+<input type='hidden' name='EMAIL' value='<?php echo $EMAIL?>'>
+<input type='hidden' name='PIN' value='<?php echo $PIN?>'>
+<input type='hidden' name='color' value='<?php echo $colorEquipo?>'>
+<input type='hidden' name='claseEquipo' value='celular'>
+<input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
+</form>
+
+</body>
+</html>

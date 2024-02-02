@@ -51,10 +51,11 @@
 <input type="password" placeholder="abc123 " name="Contraseña" required>
 <label for="PIN">Ingresar el PIN del equipo:</label>
 <input type="tel" placeholder="0000" name="PIN" required>
+<label for="PIN">Ingresar el departamento de a quien se le entrga el equipo:</label>
+<input type="tel" placeholder="CONTABILIDAD" name="departamento" required>
 <input type="submit" value="enviar">
 </form>
-</body>
-</html>
+
 
 <?php
 require '/Users/Admin/Desktop/prueba codigo actas/vendor/autoload.php';
@@ -94,50 +95,51 @@ $SIM = $_POST['SIM'];
 $EMAIL = $_POST['EMAIL'];
 $PIN = $_POST['PIN'];
 $colorEquipo = $_POST['color'];
+$departamento = $_POST['departamento'];
 
 
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/CELULARES ELIS 2023.xlsx');
+    // $spreadsheet = new Spreadsheet();
+    // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/CELULARES ELIS 2023.xlsx');
 
-    $elemento = $hojaCalculo->getActiveSheet();
+    // $elemento = $hojaCalculo->getActiveSheet();
 
-    $columnaNombrePersona ="H" ;
-    $columnaCedulaPersona ="N" ;
-    $columnaIMEI1 ="D" ;
-    $columnaTipoDeEstado ="O" ;
-    $columnaIMEI2 = "E" ;
-    $columnaAsignado = "I" ;
-    $columnaSIM = "G";
-    $columnaMarcaEquipo = "B";
-    $columnaModeloEquipo = "C";
-    $columnaSerialEquipo = "A";
-    $columnaNumero = "F";
-    $columnaCorporativo = "J";
-    $columnaEMAIl = "K";
-    $columnaContraseña = "L";
-    $columnaPIN = "M";
+    // $columnaNombrePersona ="H" ;
+    // $columnaCedulaPersona ="N" ;
+    // $columnaIMEI1 ="D" ;
+    // $columnaTipoDeEstado ="O" ;
+    // $columnaIMEI2 = "E" ;
+    // $columnaAsignado = "I" ;
+    // $columnaSIM = "G";
+    // $columnaMarcaEquipo = "B";
+    // $columnaModeloEquipo = "C";
+    // $columnaSerialEquipo = "A";
+    // $columnaNumero = "F";
+    // $columnaCorporativo = "J";
+    // $columnaEMAIl = "K";
+    // $columnaContraseña = "L";
+    // $columnaPIN = "M";
     
 
-    $fila = 1;
-        while (!empty($elemento->getCell($columnaSerialEquipo . $fila)->getValue())) {
-    $fila++;
-    }
+    // $fila = 1;
+    //     while (!empty($elemento->getCell($columnaSerialEquipo . $fila)->getValue())) {
+    // $fila++;
+    // }
 
-    $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-    $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-    $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-    $elemento->setCellValue($columnaIMEI1 . $fila, $imei1);
-    $elemento->setCellValue($columnaIMEI2 . $fila, $imei2);
-    $elemento->setCellValue($columnaNumero . $fila, $numero);
-    $elemento->setCellValue($columnaSIM . $fila, $SIM);
-    $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-    $elemento->setCellValue($columnaAsignado . $fila, $nombreAsignado);
-    $elemento->setCellValue($columnaCorporativo . $fila, $Corporativo);
-    $elemento->setCellValue($columnaEMAIl . $fila, $EMAIL);
-    $elemento->setCellValue($columnaContraseña . $fila, $contraseñaCorreo);
-    $elemento->setCellValue($columnaPIN . $fila, $PIN);
-    $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-    $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
+    // $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
+    // $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
+    // $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
+    // $elemento->setCellValue($columnaIMEI1 . $fila, $imei1);
+    // $elemento->setCellValue($columnaIMEI2 . $fila, $imei2);
+    // $elemento->setCellValue($columnaNumero . $fila, $numero);
+    // $elemento->setCellValue($columnaSIM . $fila, $SIM);
+    // $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
+    // $elemento->setCellValue($columnaAsignado . $fila, $nombreAsignado);
+    // $elemento->setCellValue($columnaCorporativo . $fila, $Corporativo);
+    // $elemento->setCellValue($columnaEMAIl . $fila, $EMAIL);
+    // $elemento->setCellValue($columnaContraseña . $fila, $contraseñaCorreo);
+    // $elemento->setCellValue($columnaPIN . $fila, $PIN);
+    // $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
+    // $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
 
 
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -276,9 +278,35 @@ $colorEquipo = $_POST['color'];
     
     // Redireccionar o hacer algo con el PDF generado
     header("Location: $archivoPdf");
-    
-    echo "SE DESCARGO SU PDF";
+
     
     exit();
 }
+
+
 ?>
+
+<form action='actualizarInventario.php'>
+<input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
+<input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
+<input type='hidden' name='Asignado' value='<?php echo $nombreAsignado?>'>
+<input type='hidden' name='usoEquipo' value='<?php echo $estadoEquipo?>'>
+<input type='hidden' name='corporativo' value='<?php echo $Corporativo?>'>
+<input type='hidden' name='Imei1' value='<?php echo $imei1?>'>
+<input type='hidden' name='Imei2' value='<?php echo $imei2?>'>
+<input type='hidden' name='contraseña' value='<?php echo $contraseñaCorreo?>'>
+<input type='hidden' name='marcaEquipo' value='<?php echo $marcaEquipo?>'>
+<input type='hidden' name='modeloEquipo' value='<?php echo $modeloEquipo?>'>
+<input type='hidden' name='serialEquipo' value='<?php echo $serialEquipo?>'>
+<input type='hidden' name='Numero' value='<?php echo $numero?>'>
+<input type='hidden' name='departamento' value='<?php echo $departamento?>'>
+<input type='hidden' name='SIM' value='<?php echo $SIM?>'>
+<input type='hidden' name='EMAIL' value='<?php echo $EMAIL?>'>
+<input type='hidden' name='PIN' value='<?php echo $PIN?>'>
+<input type='hidden' name='color' value='<?php echo $colorEquipo?>'>
+<input type='hidden' name='claseEquipo' value='celular'>
+<input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
+</form>
+
+</body>
+</html>

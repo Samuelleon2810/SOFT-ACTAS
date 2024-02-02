@@ -89,68 +89,68 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($tipoEquipo === "escritorio"){
 
-        $spreadsheet = new Spreadsheet();
-        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $spreadsheet = new Spreadsheet();
+        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $columnaNombrePersona ="O" ;
-        $columnaCedulaPersona ="Z" ;
-        $columnaTipoDeEquipo ="Q" ;
-        $columnaTipoDeEstado ="AB" ;
-        $columnaNombreEquipo = "A" ;
-        $columnaNombreProcesadorEquipo = "B" ;
-        $columnaAlmacenamientoEquipo = "C" ;
-        $columnaRAMEquipo = "D";
-        $columnaMarcaEquipo = "E";
-        $columnaModeloEquipo = "F";
-        $columnaSerialEquipo = "G";
-        $columnaVersionSO = "H";
-        $columnaAsignado = "AC";
+        // $columnaNombrePersona ="O" ;
+        // $columnaCedulaPersona ="Z" ;
+        // $columnaTipoDeEquipo ="Q" ;
+        // $columnaTipoDeEstado ="AB" ;
+        // $columnaNombreEquipo = "A" ;
+        // $columnaNombreProcesadorEquipo = "B" ;
+        // $columnaAlmacenamientoEquipo = "C" ;
+        // $columnaRAMEquipo = "D";
+        // $columnaMarcaEquipo = "E";
+        // $columnaModeloEquipo = "F";
+        // $columnaSerialEquipo = "G";
+        // $columnaVersionSO = "H";
+        // $columnaAsignado = "AC";
     
-        $spreadsheet = new Spreadsheet();
-        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $spreadsheet = new Spreadsheet();
+        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $elemento = $hojaCalculo->getActiveSheet();
+        // $elemento = $hojaCalculo->getActiveSheet();
     
-        $hojita = $hojaCalculo->getSheet(1);
+        // $hojita = $hojaCalculo->getSheet(1);
     
-        $cellIterator = $elemento->getRowIterator();
+        // $cellIterator = $elemento->getRowIterator();
     
-        foreach ($hojita->getRowIterator() as $row) {
-            foreach ($row->getCellIterator() as $cell) {
-                $cellValue = $cell->getValue();
+        // foreach ($hojita->getRowIterator() as $row) {
+        //     foreach ($row->getCellIterator() as $cell) {
+        //         $cellValue = $cell->getValue();
             
-                if ($cellValue == $serialEquipo) {
-                    $foundCell = $cell->getCoordinate();
-                    list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-                    break 2;  // Salir de ambos bucles
-                }
+        //         if ($cellValue == $serialEquipo) {
+        //             $foundCell = $cell->getCoordinate();
+        //             list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+        //             break 2;  // Salir de ambos bucles
+        //         }
     
-            }
-        }
+        //     }
+        // }
     
-        if (!isset($foundCell)) {
-            $fila = 1;
-            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-            $fila++;
-        }
-        }
+        // if (!isset($foundCell)) {
+        //     $fila = 1;
+        //     while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+        //     $fila++;
+        // }
+        // }
     
-        $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-        $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-        $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
-        $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
-        $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
-        $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
-        $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-        $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-        $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-        $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
-        $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
-        $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-        $elemento->setCellValue($columnaAsignado . $fila, "EN BODEGA");
+        // $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
+        // $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
+        // $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
+        // $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
+        // $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
+        // $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
+        // $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
+        // $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
+        // $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
+        // $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
+        // $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
+        // $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
+        // $elemento->setCellValue($columnaAsignado . $fila, "EN BODEGA");
     
-        $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-        $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
+        // $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -222,7 +222,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             "DISCO DURO" => $almacenamientoEquipo,
             "MEMORIA RAM" => $RAMEquipo,
             "NOMBRE DEL EQUIPO" => $nombreEquipo,
-            "TECLADO Y MOUSE" => $periferico
+            "TECLADO Y MOUSE" => 'si'
         ];
         
         
@@ -235,7 +235,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $section->addText("\nDe acuerdo con lo anterior se hace constar que en el equipo se encuentra en las condiciones adecuadas para recibirlo sin ningunas salvedades." , $normalFontStyle , $justificar);
         
         
-        $section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran ESTADOPERIFERICOS y en las condiciones adecuadas para recibirlo sin ninguna salvedad. Después de entregado es responsabilidad de la persona brindar buen uso." , $normalFontStyle , $justificar);
+        $section->addText("\nDe acuerdo con lo anterior se hace constar que en el teclado y mouse se encuentran en buen estado y en las condiciones adecuadas para recibirlo sin ninguna salvedad. Después de entregado es responsabilidad de la persona brindar buen uso." , $normalFontStyle , $justificar);
         
         
         $section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
@@ -244,8 +244,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $section->addImage(
             $imagePathJul,
             array(
-                'width' => Converter::cmToPixel(3),
-                'height' => Converter::cmToPixel(1.5),      
+                'width' => Converter::cmToPixel(2.7),
+                'height' => Converter::cmToPixel(1),      
                 'marginTop' => Converter::cmToPixel(1), 
             )
         );
@@ -272,89 +272,72 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         
         echo "SE DESCARGO SU WORD";
         
-        $archivoWord = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Escritorio_' . $nombreUsuario . '.docx';
-        
-        $archivoPdf = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Escritorio_' . $nombreUsuario . '.pdf';
-        
-        $phpWord = IOFactory::load($archivoWord);
-        
-        $archivoHtml = 'Acta_Recibido_Computadores_' . $nombreUsuario . '.html';
-        $objWriter = IOFactory::createWriter($phpWord, 'HTML');
-        $objWriter->save($archivoHtml);
-        
-        $command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
-        $command->execute();
-        
-        header("Location: $archivoPdf");
-        
-        echo "SE DESCARGO SU PDF";
-        
         exit();
 
     }else{
 
-        $spreadsheet = new Spreadsheet();
-        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $spreadsheet = new Spreadsheet();
+        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $columnaNombrePersona ="O" ;
-        $columnaCedulaPersona ="Z" ;
-        $columnaTipoDeEquipo ="Q" ;
-        $columnaTipoDeEstado ="AB" ;
-        $columnaNombreEquipo = "A" ;
-        $columnaNombreProcesadorEquipo = "B" ;
-        $columnaAlmacenamientoEquipo = "C" ;
-        $columnaRAMEquipo = "D";
-        $columnaMarcaEquipo = "E";
-        $columnaModeloEquipo = "F";
-        $columnaSerialEquipo = "G";
-        $columnaVersionSO = "H";
-        $columnaAsignado = "AC";
+        // $columnaNombrePersona ="O" ;
+        // $columnaCedulaPersona ="Z" ;
+        // $columnaTipoDeEquipo ="Q" ;
+        // $columnaTipoDeEstado ="AB" ;
+        // $columnaNombreEquipo = "A" ;
+        // $columnaNombreProcesadorEquipo = "B" ;
+        // $columnaAlmacenamientoEquipo = "C" ;
+        // $columnaRAMEquipo = "D";
+        // $columnaMarcaEquipo = "E";
+        // $columnaModeloEquipo = "F";
+        // $columnaSerialEquipo = "G";
+        // $columnaVersionSO = "H";
+        // $columnaAsignado = "AC";
     
-        $spreadsheet = new Spreadsheet();
-        $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $spreadsheet = new Spreadsheet();
+        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
     
-        $elemento = $hojaCalculo->getActiveSheet();
+        // $elemento = $hojaCalculo->getActiveSheet();
     
-        $hojita = $hojaCalculo->getSheet(1);
+        // $hojita = $hojaCalculo->getSheet(1);
     
-        $cellIterator = $elemento->getRowIterator();
+        // $cellIterator = $elemento->getRowIterator();
     
-        foreach ($hojita->getRowIterator() as $row) {
-            foreach ($row->getCellIterator() as $cell) {
-                $cellValue = $cell->getValue();
+        // foreach ($hojita->getRowIterator() as $row) {
+        //     foreach ($row->getCellIterator() as $cell) {
+        //         $cellValue = $cell->getValue();
             
-                if ($cellValue == $serialEquipo) {
-                    $foundCell = $cell->getCoordinate();
-                    list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-                    break 2;  // Salir de ambos bucles
-                }
+        //         if ($cellValue == $serialEquipo) {
+        //             $foundCell = $cell->getCoordinate();
+        //             list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
+        //             break 2;  // Salir de ambos bucles
+        //         }
     
-            }
-        }
+        //     }
+        // }
     
-        if (!isset($foundCell)) {
-            $fila = 1;
-            while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-            $fila++;
-        }
-        }
+        // if (!isset($foundCell)) {
+        //     $fila = 1;
+        //     while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
+        //     $fila++;
+        // }
+        // }
     
-        $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-        $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-        $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
-        $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
-        $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
-        $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
-        $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-        $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-        $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-        $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
-        $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
-        $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-        $elemento->setCellValue($columnaAsignado . $fila, "EN BODEGA");
+        // $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
+        // $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
+        // $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
+        // $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
+        // $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
+        // $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
+        // $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
+        // $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
+        // $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
+        // $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
+        // $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
+        // $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
+        // $elemento->setCellValue($columnaAsignado . $fila, "EN BODEGA");
     
-        $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-        $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
+        // $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
+        // $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -473,29 +456,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         header("Location: $archivoWord");
         
         echo "SE DESCARGO SU WORD";
-        
-        $archivoWord = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.docx';
-        
-        // Ruta del archivo PDF de salida
-        $archivoPdf = 'C:Users/Admin/Downloads/Acta_Recibido_Computador_Portatil_' . $nombreUsuario . '.pdf';
-        
-        // Cargar el documento Word
-        $phpWord = IOFactory::load($archivoWord);
-        
-        // Guardar el documento Word en HTML temporal
-        $archivoHtml = 'Acta_Entrega_Computadores_' . $nombreUsuario . '.html';
-        $objWriter = IOFactory::createWriter($phpWord, 'HTML');
-        $objWriter->save($archivoHtml);
-        
-        // Convertir el archivo HTML a PDF
-        $command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
-        $command->execute();
-        
-        // Redireccionar o hacer algo con el PDF generado
-        header("Location: $archivoPdf");
-        
-        echo "SE DESCARGO SU PDF";
-        
+              
         exit();
 
     }
