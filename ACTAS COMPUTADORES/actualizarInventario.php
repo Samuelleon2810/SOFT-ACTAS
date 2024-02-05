@@ -9,6 +9,9 @@ require '/Users/Admin/Documents/GitHub/prueba-codigo-actas/vendor/autoload.php';
 include_once './ActaEntregaComputadores.php';
 
 if($_SERVER['REQUEST_METHOD']=== 'POST'){
+    
+    $tipoEquipo = $_POST['tipoEquipo'];
+
     if(isset($_POST['actualizarExcel'])){
 
         if($tipoEquipo === "escritorio"){
@@ -25,6 +28,7 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
             $modeloEquipo = $_POST['modeloEquipo'];
             $serialEquipo = $_POST['serialEquipo'];
             $versionSO = $_POST['versionSO'];
+            $propiedad = $_POST['propiedadEquipo'];
         
 
             require "./CONEXION BD/conexion.php";

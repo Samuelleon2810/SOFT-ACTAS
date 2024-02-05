@@ -189,7 +189,7 @@ $section->addText("En caso de retiro de la compañía, se debe reintegrar en bue
 
 $section->addText("\nSe deja en claro que el equipo no cuenta con nungun tipo de seguro contra robo perdida o cualquier daño, es total responsabilidad quien recibe y firma", $normalFontStyle , $justificar);
 
-$section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
+$section->addText("\nEntrega el equipo                                                                                 Recibe el equipo" , $normalFontStyleConNegrita);
 
 $imagePathJul = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/jul.png';
 $section->addImage(
@@ -350,7 +350,7 @@ $section->addText("\nSe deja en claro que el equipo no cuenta con nungun tipo de
 $section->addText("En caso de retiro de la compañía, se debe reintegrar en buen estado de funcionamiento." , $normalFontStyle);
 
 
-$section->addText("\nRecibe el equipo                                                                                  Entrega" , $normalFontStyleConNegrita);
+$section->addText("\nEntrega el equipo                                                                               Recibe el equipo" , $normalFontStyleConNegrita);
 
 $imagePathJul = 'C:/Users/Admin/Desktop/prueba codigo actas/IMAGENES/jul.png';
 $section->addImage(
@@ -404,6 +404,7 @@ echo "SE DESCARGO SU WORD";
 <input type='hidden' name='departamento' value='<?php echo $departamento?>'>
 <input type='hidden' name='cortex' value='<?php echo $cortex?>'>
 <input type='hidden' name='glpi' value='<?php echo $glpi?>'>
+<input type="hidden" name='propiedadEquipo' value="uso">
 <input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
 </form>
 

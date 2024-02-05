@@ -95,51 +95,6 @@ $SIM = $_POST['SIM'];
 $EMAIL = $_POST['EMAIL'];
 $PIN = $_POST['PIN'];
 
-
-    $spreadsheet = new Spreadsheet();
-    $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/CELULARES ELIS 2023.xlsx');
-
-    $elemento = $hojaCalculo->getActiveSheet();
-
-    $columnaNombrePersona ="H" ;
-    $columnaCedulaPersona ="N" ;
-    $columnaIMEI1 ="D" ;
-    $columnaTipoDeEstado ="O" ;
-    $columnaIMEI2 = "E" ;
-    $columnaAsignado = "I" ;
-    $columnaSIM = "G";
-    $columnaMarcaEquipo = "B";
-    $columnaModeloEquipo = "C";
-    $columnaSerialEquipo = "A";
-    $columnaNumero = "F";
-    $columnaCorporativo = "J";
-    $columnaEMAIl = "K";
-    $columnaContraseña = "L";
-    $columnaPIN = "M";
-    
-
-    $fila = 1;
-        while (!empty($elemento->getCell($columnaSerialEquipo . $fila)->getValue())) {
-    $fila++;
-    }
-
-    $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-    $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-    $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-    $elemento->setCellValue($columnaIMEI1 . $fila, $imei1);
-    $elemento->setCellValue($columnaIMEI2 . $fila, $imei2);
-    $elemento->setCellValue($columnaNumero . $fila, $numero);
-    $elemento->setCellValue($columnaSIM . $fila, $SIM);
-    $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-    $elemento->setCellValue($columnaAsignado . $fila, $nombreAsignado);
-    $elemento->setCellValue($columnaCorporativo . $fila, $Corporativo);
-    $elemento->setCellValue($columnaEMAIl . $fila, $EMAIL);
-    $elemento->setCellValue($columnaContraseña . $fila, $contraseñaCorreo);
-    $elemento->setCellValue($columnaPIN . $fila, $PIN);
-    $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-    $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-
-
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
     $section = $phpWord->addSection();
@@ -253,33 +208,11 @@ $PIN = $_POST['PIN'];
     
     echo "SE DESCARGO SU WORD";
     
-    $archivoWord = 'C:Users/Admin/Downloads/Acta_Recibido_Celular_' . $nombreUsuario . '.docx';
-    
-    // Ruta del archivo PDF de salida
-    $archivoPdf = 'C:Users/Admin/Downloads/Acta_Recibido_Celular_' . $nombreUsuario . '.pdf';
-    
-    // Cargar el documento Word
-    $phpWord = IOFactory::load($archivoWord);
-    
-    // Guardar el documento Word en HTML temporal
-    $archivoHtml = 'Acta_Recibido_Celular_' . $nombreUsuario . '.html';
-    $objWriter = IOFactory::createWriter($phpWord, 'HTML');
-    $objWriter->save($archivoHtml);
-    
-    // Convertir el archivo HTML a PDF
-    $command = new Command("wkhtmltopdf $archivoHtml $archivoPdf");
-    $command->execute();
-    
-    // Redireccionar o hacer algo con el PDF generado
-    header("Location: $archivoPdf");
-    
-    echo "SE DESCARGO SU PDF";
-    
     exit();
 }
 ?>
 
-<form action='actualizarInventario.php'>
+<form action='/ACTAS COMPUTADORES/actualizarInventario.php'>
 <input type='hidden' name='nombre' value='<?php echo $nombreUsuario?>'>
 <input type='hidden' name='cedula' value='<?php echo $cedulaUsuario?>'>
 <input type='hidden' name='Asignado' value='<?php echo $nombreAsignado?>'>
@@ -297,7 +230,8 @@ $PIN = $_POST['PIN'];
 <input type='hidden' name='EMAIL' value='<?php echo $EMAIL?>'>
 <input type='hidden' name='PIN' value='<?php echo $PIN?>'>
 <input type='hidden' name='color' value='<?php echo $colorEquipo?>'>
-<input type='hidden' name='claseEquipo' value='celular'>
+<input type='hidden' name='tipoEquipo' value='celular'>
+<input type="hidden" name='propiedadEquipo' value="bodega">
 <input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
 </form>
 
