@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/index.css">
+    <link href="https://fonts.cdnfonts.com/css/sharp-sans" rel="stylesheet">
     <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
     <title>Acta Recibido Computadores</title>
 </head>
@@ -213,68 +214,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     }else{
 
-        // $spreadsheet = new Spreadsheet();
-        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-    
-        // $columnaNombrePersona ="O" ;
-        // $columnaCedulaPersona ="Z" ;
-        // $columnaTipoDeEquipo ="Q" ;
-        // $columnaTipoDeEstado ="AB" ;
-        // $columnaNombreEquipo = "A" ;
-        // $columnaNombreProcesadorEquipo = "B" ;
-        // $columnaAlmacenamientoEquipo = "C" ;
-        // $columnaRAMEquipo = "D";
-        // $columnaMarcaEquipo = "E";
-        // $columnaModeloEquipo = "F";
-        // $columnaSerialEquipo = "G";
-        // $columnaVersionSO = "H";
-        // $columnaAsignado = "AC";
-    
-        // $spreadsheet = new Spreadsheet();
-        // $hojaCalculo = IOFactory::load('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
-    
-        // $elemento = $hojaCalculo->getActiveSheet();
-    
-        // $hojita = $hojaCalculo->getSheet(1);
-    
-        // $cellIterator = $elemento->getRowIterator();
-    
-        // foreach ($hojita->getRowIterator() as $row) {
-        //     foreach ($row->getCellIterator() as $cell) {
-        //         $cellValue = $cell->getValue();
-            
-        //         if ($cellValue == $serialEquipo) {
-        //             $foundCell = $cell->getCoordinate();
-        //             list($columna, $fila) = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::coordinateFromString($foundCell);
-        //             break 2;  // Salir de ambos bucles
-        //         }
-    
-        //     }
-        // }
-    
-        // if (!isset($foundCell)) {
-        //     $fila = 1;
-        //     while (!empty($elemento->getCell($columnaNombreEquipo . $fila)->getValue())) {
-        //     $fila++;
-        // }
-        // }
-    
-        // $elemento->setCellValue($columnaNombrePersona . $fila, $nombreUsuario);
-        // $elemento->setCellValue($columnaCedulaPersona . $fila, $cedulaUsuario);
-        // $elemento->setCellValue($columnaNombreEquipo . $fila, $nombreEquipo);
-        // $elemento->setCellValue($columnaNombreProcesadorEquipo . $fila, $nombreProcesador);
-        // $elemento->setCellValue($columnaAlmacenamientoEquipo . $fila, $almacenamientoEquipo);
-        // $elemento->setCellValue($columnaRAMEquipo . $fila, $RAMEquipo);
-        // $elemento->setCellValue($columnaMarcaEquipo . $fila, $marcaEquipo);
-        // $elemento->setCellValue($columnaSerialEquipo . $fila, $serialEquipo);
-        // $elemento->setCellValue($columnaModeloEquipo . $fila, $modeloEquipo);
-        // $elemento->setCellValue($columnaVersionSO . $fila, $versionSO);
-        // $elemento->setCellValue($columnaTipoDeEquipo . $fila, $tipoEquipo);
-        // $elemento->setCellValue($columnaTipoDeEstado . $fila, $estadoEquipo);
-        // $elemento->setCellValue($columnaAsignado . $fila, "EN BODEGA");
-    
-        // $writer = IOFactory::createWriter($hojaCalculo, 'Xlsx');
-        // $writer->save('C:/Users/Admin/Downloads/01_INVENTARIO PLANTA NORTE 2023.xlsx');
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -418,6 +357,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <input type="hidden" name='propiedadEquipo' value="bodega">
 <input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
 </form>
-
+<div>
+    <button class="boton-volver" onclick="location.href='../index.php'">Volver</button>
+</div>
 </body>
 </html>

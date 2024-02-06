@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
+    <link href="https://fonts.cdnfonts.com/css/sharp-sans" rel="stylesheet">
     <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
     <title>Acta Entrega Celulares</title>
 </head>
@@ -243,6 +244,8 @@ $departamento = $_POST['departamento'];
 <input type="hidden" name='propiedadEquipo' value="uso">
 <input type='submit' name='actualizarExcel' value="Subir al Inventario" class='botones'>
 </form>
-
+<div>
+<button class="boton-volver" onclick="location.href='../index.php'">Volver</button>
+</div>
 </body>
 </html>

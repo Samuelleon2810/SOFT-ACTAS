@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/index.css">
     <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
+    <link href="https://fonts.cdnfonts.com/css/sharp-sans" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILTRO Y REPORTES</title>
 </head>
@@ -565,7 +566,9 @@ $_SESSION['matriz'] = $matriz;
 ?>
 
 </section>
-
+<div>
+<button class="boton-volver" onclick="location.href='../index.php'">Volver</button>
+</div>
 </body>
 </html>
 

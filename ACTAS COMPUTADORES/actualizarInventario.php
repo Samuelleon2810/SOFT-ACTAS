@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css">
+    <link href="https://fonts.cdnfonts.com/css/sharp-sans" rel="stylesheet">
+    <link rel="shortcut icon" href="/IMAGENES/logoElis.png" type="image/x-icon">
+    <title>ACTUALIZANDO INVENTARIO...</title>
+</head>
+<body>
+
+<div>
+<button class="boton-volver" onclick="location.href='../index.php'">Volver</button>
+</div>
+
 <?php
 
 use PhpOffice\PhpWord\SimpleType\Jc;
@@ -287,3 +303,5 @@ $conexion2-> close();
 }
 
 ?>
+</body>
+</html>
